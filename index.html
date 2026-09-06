@@ -51,17 +51,22 @@
         <nav class="boom-navigation">
           <ul>
             <li><a href="#club">باشگاه</a></li>
-            <li><a href="#coach">مربی</a></li>
-            <li><a href="#process">مسیر تمرین</a></li>
             <li><a href="#gallery">گالری</a></li>
+            <li><a href="#coach">مربی</a></li>
             <li><a href="#certificates">گواهینامه‌ها</a></li>
+            <li><a href="#process">مسیر تمرین</a></li>
           </ul>
         </nav>
 
         <a href="#contact" class="btn btn-gold nav-cta">
           <span>رزرو ارزیابی</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
+
+        <button class="mobile-toggle" aria-label="باز کردن منو">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
     </div>
   </header>
@@ -72,8 +77,6 @@
       <div class="hero-bg-overlay"></div>
       <div class="wrap hero-grid">
         <div class="hero-content" data-reveal>
-          
-          <!-- استایل جدید نام باشگاه و مربی دقیقاً مطابق تصویر مدنظر شما -->
           <div class="hero-brand-custom-header">
             <div class="coach-side-info">
               <span class="coach-label-sm">مربی مسئول</span>
@@ -81,12 +84,11 @@
             </div>
             <div class="divider-vertical"></div>
             <div class="brand-side-info">
-              <span class="brand-en-sub">| BOOM</span>
+              <span class="brand-en-sub">BOOM</span>
               <span class="brand-fa-title">انفجار</span>
             </div>
           </div>
 
-          <!-- شعار اصلی -->
           <h1 class="hero-title">
             قبل از تمرین،<br>
             <span class="text-purple-glow">بدن خودت را بشناس.</span>
@@ -97,7 +99,7 @@
           </p>
 
           <div class="hero-actions">
-            <a href="#club" class="btn btn-primary">آشنایی با باشگاه <span>←</span></a>
+            <a href="#club" class="btn btn-primary">آشنایی با باشگاه</a>
             <a href="#coach" class="btn btn-coach-glow">آشنایی با مربی</a>
           </div>
 
@@ -117,12 +119,18 @@
       </div>
     </section>
 
-    <!-- Club Section (شامل معرفی و گالری بدون متن زیر عکس‌ها با قابلیت لایت‌باکس/زوم) -->
+    <!-- 1. Club Section -->
     <section class="section club" id="club">
       <div class="wrap">
         <div class="section-head" data-reveal>
           <span class="tag">درباره آکادمی</span>
           <h2>طراحی شده برای <span class="text-purple">نتیجه و تغییر واقعی</span></h2>
+        </div>
+
+        <div class="club-overview-text" data-reveal>
+          <p>
+            آکادمی تخصصی ورزشی <strong>انفجار (BOOM)</strong> محیطی پیشرفته و مجهز است که با تلفیق دانش بیومکانیک ورزشی و تجهیزات مدرن، فضایی متفاوت برای تحول بدنی فراهم کرده است. در این مجموعه، تمرکز ما تنها روی تمرین دادن نیست؛ بلکه ایجاد فضایی پرانرژی، ایمن و کاملاً استاندارد برای اصلاح الگوهای حرکتی، افزایش قدرت و رسیدن به آمادگی جسمانی پایدار است.
+          </p>
         </div>
 
         <div class="features-list" data-reveal-stagger>
@@ -158,42 +166,77 @@
             </div>
           </div>
         </div>
-
-        <!-- گالری تصاویر (بدون متن زیر عکس‌ها + مجهز به قابلیت کلیک و بزرگ‌نمایی) -->
-        <div class="club-gallery-block" id="gallery" style="margin-top: 5rem;">
-          <div class="section-head" data-reveal>
-            <span class="tag">گالری تصاویر</span>
-            <h3>فضای تمرینی <span class="text-purple">آکادمی انفجار</span></h3>
-          </div>
-
-          <div class="masonry-gallery zoomable-gallery" data-reveal-stagger>
-            <div class="masonry-item item-tall">
-              <img src="https://images.unsplash.com/photo-1761971975769-97e598bf526b?auto=format&fit=crop&w=1200&q=88" alt="سالن اصلی" class="lightbox-trigger">
-            </div>
-            <div class="masonry-item">
-              <img src="https://images.unsplash.com/photo-1778828494354-9b717d36dc99?auto=format&fit=crop&w=1000&q=88" alt="تمرینات قدرتی" class="lightbox-trigger">
-            </div>
-            <div class="masonry-item">
-              <img src="https://images.unsplash.com/photo-1778828450059-f39d5bbb01af?auto=format&fit=crop&w=1000&q=88" alt="ارزیابی حرکتی" class="lightbox-trigger">
-            </div>
-            <div class="masonry-item">
-              <img src="https://images.unsplash.com/photo-1711006366881-5076ba350008?auto=format&fit=crop&w=1000&q=88" alt="تمرین خصوصی" class="lightbox-trigger">
-            </div>
-            <div class="masonry-item">
-              <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1000&q=88" alt="تمرینات فانکشنال" class="lightbox-trigger">
-            </div>
-          </div>
-        </div>
-
       </div>
     </section>
 
-    <!-- Coach Section -->
+    <!-- 2. Gallery Section -->
+    <section class="section gallery" id="gallery">
+      <div class="wrap">
+        <div class="section-head text-center" data-reveal>
+          <span class="tag">گالری تصاویر</span>
+          <h2>محیط و <span class="text-purple">فضای آکادمی</span></h2>
+        </div>
+
+        <div class="gallery-slider-wrapper" data-reveal>
+          <button class="gallery-nav gallery-prev" aria-label="قبلی">❮</button>
+
+          <div class="gallery-slider-container">
+            <div class="gallery-track">
+              
+              <div class="gallery-slide lightbox-trigger">
+                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80" alt="تجهیزات آکادمی">
+                <div class="item-caption">
+                  <span>تجهیزات مدرن</span>
+                  <span>BOOM</span>
+                </div>
+              </div>
+
+              <div class="gallery-slide lightbox-trigger">
+                <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80" alt="تمرینات اختصاصی">
+                <div class="item-caption">
+                  <span>تمرینات تخصصی</span>
+                  <span>BOOM</span>
+                </div>
+              </div>
+
+              <div class="gallery-slide lightbox-trigger">
+                <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=800&q=80" alt="ارزیابی حرکتی">
+                <div class="item-caption">
+                  <span>آنالیز بیومکانیک</span>
+                  <span>BOOM</span>
+                </div>
+              </div>
+
+              <div class="gallery-slide lightbox-trigger">
+                <img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=800&q=80" alt="سالن فانکشنال">
+                <div class="item-caption">
+                  <span>فضای فانکشنال</span>
+                  <span>BOOM</span>
+                </div>
+              </div>
+
+              <div class="gallery-slide lightbox-trigger">
+                <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=800&q=80" alt="آمادگی جسمانی">
+                <div class="item-caption">
+                  <span>قدرت و استقامت</span>
+                  <span>BOOM</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <button class="gallery-nav gallery-next" aria-label="بعدی">❯</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Coach Section -->
     <section class="section coach-spotlight" id="coach">
       <div class="wrap">
         <div class="coach-container" data-reveal>
           <div class="coach-media">
-           <img src="coach.jpeg" alt="محمد حسین محررزاده - مربی مسئول" class="coach-photo">
+            <img src="coach.jpeg" alt="محمد حسین محررزاده - مربی مسئول" class="coach-photo">
             <div class="coach-badge-overlay">مربی مسئول آکادمی</div>
           </div>
 
@@ -216,49 +259,13 @@
               «برنامه خوب برای همه نوشته نمی‌شود؛ برای شرایط منحصر‌به‌فرد بدن تو ساخته می‌شود.»
             </blockquote>
 
-            <a href="#contact" class="btn btn-gold coach-btn">درخواست جلسه ارزیابی <span>←</span></a>
+            <a href="#contact" class="btn btn-gold coach-btn">درخواست جلسه ارزیابی</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Process Timeline Section -->
-    <section class="section process" id="process">
-      <div class="wrap">
-        <div class="section-head text-center" data-reveal>
-          <span class="tag">مسیر تمرین</span>
-          <h2>مراحل رسیدن به <span class="text-purple">اوج آمادگی</span></h2>
-        </div>
-
-        <div class="timeline-wrapper" data-reveal>
-          <div class="timeline-progress-bar">
-            <div class="timeline-progress-fill"></div>
-          </div>
-
-          <div class="timeline-steps">
-            <div class="t-step active">
-              <div class="t-dot">۱</div>
-              <h3>ارزیابی اولیه</h3>
-              <p>تست‌های ساختار قامتی، آنالیز دامنه حرکتی و سنجش وضعیت بیومکانیک بدن.</p>
-            </div>
-
-            <div class="t-step">
-              <div class="t-dot">۲</div>
-              <h3>طراحی برنامه</h3>
-              <p>تدوین برنامه اصلاحی و تمرینی بر پایه متغیرهای دقیق بدنی و اهداف فردی.</p>
-            </div>
-
-            <div class="t-step">
-              <div class="t-dot">۳</div>
-              <h3>اجرا و پیگیری</h3>
-              <p>تمرین زیر نظر مربی، آنالیز دوره‌ای نتایج و به‌روزرسانی مداوم شدت تمرین.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Certificates Slider Section -->
+    <!-- 4. Certificates Section -->
     <section class="section certificates" id="certificates">
       <div class="wrap">
         <div class="section-head" data-reveal>
@@ -312,7 +319,7 @@
                 <div class="cert-badge">تخصصی</div>
                 <div class="cert-icon">⚡</div>
                 <div class="cert-info">
-                  <h4>بازتوانی ورزشی و اسیب‌شناسی</h4>
+                  <h4>بازتوانی ورزشی و آسیب‌شناسی</h4>
                   <p>طراحی تمرینات بازگشت به ورزش پس از آسیب</p>
                 </div>
               </div>
@@ -322,25 +329,57 @@
 
           <button class="cert-nav cert-next" aria-label="بعدی">❯</button>
         </div>
-
-        <div class="cert-dots"></div>
       </div>
     </section>
 
-    <!-- Call To Action -->
+    <!-- 5. Process Section -->
+    <section class="section process" id="process">
+      <div class="wrap">
+        <div class="section-head text-center" data-reveal>
+          <span class="tag">مسیر تمرین</span>
+          <h2>مراحل رسیدن به <span class="text-purple">اوج آمادگی</span></h2>
+        </div>
+
+        <div class="timeline-wrapper" data-reveal>
+          <div class="timeline-line"></div>
+
+          <div class="timeline-steps">
+            <div class="t-step">
+              <div class="t-dot">۱</div>
+              <h3>ارزیابی اولیه</h3>
+              <p>تست‌های ساختار قامتی، آنالیز دامنه حرکتی و سنجش وضعیت بیومکانیک بدن.</p>
+            </div>
+
+            <div class="t-step">
+              <div class="t-dot">۲</div>
+              <h3>طراحی برنامه</h3>
+              <p>تدوین برنامه اصلاحی و تمرینی بر پایه متغیرهای دقیق بدنی و اهداف فردی.</p>
+            </div>
+
+            <div class="t-step">
+              <div class="t-dot">۳</div>
+              <h3>اجرا و پیگیری</h3>
+              <p>تمرین زیر نظر مربی، آنالیز دوره‌ای نتایج و به‌روزرسانی مداوم شدت تمرین.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Call To Action -->
     <section class="cta-section" id="contact">
       <div class="wrap">
         <div class="cta-box" data-reveal>
           <div class="cta-spark">💥</div>
           <h2>آماده‌ای بدنت را به <span class="text-gold">سطح بعدی</span> ببری؟</h2>
           <p>همین امروز اولین جلسه ارزیابی تخصصی خودت را رزرو کن.</p>
-          <a href="tel:" class="btn btn-gold btn-lg">تماس و رزرو ارزیابی <span>←</span></a>
+          <a href="tel:09120000000" class="btn btn-gold btn-lg">تماس و رزرو ارزیابی</a>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- مودال یا لایت‌باکس بزرگ‌نمایی عکس‌ها -->
+  <!-- مودال لایت‌باکس بزرگ‌نمایی عکس‌ها -->
   <div id="imageLightbox" class="lightbox-modal">
     <span class="lightbox-close">&times;</span>
     <img class="lightbox-content" id="lightboxImg" alt="تصویر بزرگ‌شده">
