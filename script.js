@@ -1,194 +1,226 @@
-const BOOM = {
-  selectors: { 
-    header: 'header', 
-    reveal: '[data-reveal], [data-reveal-stagger]', 
-    hero: ['.hero .eyebrow','.hero h1','.hero .lead','.hero .hero-actions','.hero-badges'], 
-    buttons: '.btn', 
-    anchors: 'a[href^="#"]' 
-  },
-  scroll: { headerThreshold: 35, revealThreshold: 0.14, revealOffset: '-50px', anchorOffset: 18 },
-  animation: { heroDelay: 120, heroStep: 100, duration: 750 }
-};
+document.addEventListener('DOMContentLoaded', () => {
 
-function prefersReducedMotion() { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
-function supportsHover() { return window.matchMedia('(hover: hover) and (pointer: fine)').matches; }
-const $ = (s, p = document) => p.querySelector(s);
-const $$ = (s, p = document) => [...p.querySelectorAll(s)];
+  // ==========================================
+  // ۱. انیمیشن ورودی بخش هیرو (Hero Section)
+  // ==========================================
+  const heroSelectors = [
+    '.hero-brand-custom-header',
+    '.hero-title',
+    '.hero-lead',
+    '.hero-actions',
+    '.hero-badges'
+  ];
 
-function initScrollReveal() {
-  const elements = $$(BOOM.selectors.reveal);
-  if (!elements.length) return;
-  if (prefersReducedMotion() || !('IntersectionObserver' in window)) {
-    elements.forEach(el => el.classList.add('in'));
-    return;
-  }
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) { entry.target.classList.add('in'); observer.unobserve(entry.target); }
-    });
-  }, { threshold: BOOM.scroll.revealThreshold, rootMargin: `0px 0px ${BOOM.scroll.revealOffset} 0px` });
-  elements.forEach(el => observer.observe(el));
-}
-
-function initHeader() {
-  const header = $(BOOM.selectors.header);
-  if (!header) return;
-  let ticking = false;
-  const updateHeader = () => { header.classList.toggle('scrolled', window.scrollY > BOOM.scroll.headerThreshold); ticking = false; };
-  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; window.requestAnimationFrame(updateHeader); } }, { passive: true });
-  updateHeader();
-}
-
-function initHero() {
-  const heroEls = $$(BOOM.selectors.hero.join(','));
-  if (!heroEls.length) return;
-  if (prefersReducedMotion()) { heroEls.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; }); return; }
-  heroEls.forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(24px)'; el.style.transition = 'opacity .75s cubic-bezier(.22,1,.36,1), transform .75s cubic-bezier(.22,1,.36,1)'; });
-  heroEls.forEach((el, i) => window.setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }, BOOM.animation.heroDelay + i * BOOM.animation.heroStep));
-}
-
-function initSmoothNavigation() {
-  $$(BOOM.selectors.anchors).forEach(link => {
-    link.addEventListener('click', e => {
-      const targetId = link.getAttribute('href');
-      if (!targetId || targetId === '#') return;
-      const target = document.querySelector(targetId);
-      if (!target) return;
-      e.preventDefault();
-      const headerHeight = $(BOOM.selectors.header)?.offsetHeight || 0;
-      window.scrollTo({ top: Math.max(0, target.getBoundingClientRect().top + window.scrollY - headerHeight - BOOM.scroll.anchorOffset), behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
-      if (history.replaceState && targetId !== '#top') history.replaceState(null, '', targetId);
-    });
+  heroSelectors.forEach((selector, index) => {
+    const element = document.querySelector(selector);
+    if (element) {
+      element.style.opacity = '0';
+      element.style.transform = 'translateY(20px)';
+      element.style.transition = `all 0.6s ease ${index * 0.15}s`;
+      
+      requestAnimationFrame(() => {
+        element.style.opacity = '1';
+        element.style.transform = 'translateY(0)';
+      });
+    }
   });
-}
 
-function initButtonGlow() {
-  if (!supportsHover()) return;
-  $$(BOOM.selectors.buttons).forEach(btn => {
-    btn.addEventListener('pointermove', e => {
-      if (e.pointerType === 'touch') return;
-      const rect = btn.getBoundingClientRect();
-      btn.style.setProperty('--mx', `${e.clientX - rect.left}px`);
-      btn.style.setProperty('--my', `${e.clientY - rect.top}px`);
-    });
-    btn.addEventListener('pointerleave', () => { btn.style.removeProperty('--mx'); btn.style.removeProperty('--my'); });
-  });
-}
+  // ==========================================
+  // ۲. مدیریت اسلایدرها (سازگار با RTL و لمس)
+  // ==========================================
+  function setupSliderNav(containerSelector, prevBtnSelector, nextBtnSelector, scrollAmount = 300) {
+    const container = document.querySelector(containerSelector);
+    const prevBtn = document.querySelector(prevBtnSelector);
+    const nextBtn = document.querySelector(nextBtnSelector);
 
-/* اسلایدر گالری کشویی گواهینامه‌ها */
-function initCertificatesSlider() {
-  const track = $('.cert-track');
-  const slides = $$('.cert-slide');
-  const prevBtn = $('.cert-prev');
-  const nextBtn = $('.cert-next');
-  const dotsContainer = $('.cert-dots');
+    if (!container) return;
 
-  if (!track || !slides.length) return;
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        e.currentTarget.blur();
+      });
+    }
 
-  let currentIndex = 0;
-
-  function getVisibleSlidesCount() {
-    if (window.innerWidth <= 600) return 1;
-    if (window.innerWidth <= 992) return 2;
-    return 3;
-  }
-
-  function getMaxIndex() {
-    return Math.max(0, slides.length - getVisibleSlidesCount());
-  }
-
-  function createDots() {
-    dotsContainer.innerHTML = '';
-    const totalDots = getMaxIndex() + 1;
-    for (let i = 0; i < totalDots; i++) {
-      const dot = document.createElement('div');
-      dot.classList.add('cert-dot');
-      if (i === currentIndex) dot.classList.add('active');
-      dot.addEventListener('click', () => goToSlide(i));
-      dotsContainer.appendChild(dot);
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        e.currentTarget.blur();
+      });
     }
   }
 
-  function updateDots() {
-    const dots = $$('.cert-dot', dotsContainer);
-    dots.forEach((dot, index) => {
-      dot.classList.toggle('active', index === currentIndex);
-    });
+  setupSliderNav('.gallery-slider-container', '.gallery-prev', '.gallery-next', 300);
+  setupSliderNav('.cert-slider-container', '.cert-prev', '.cert-next', 300);
+
+  // ==========================================
+  // ۳. مدیریت منوی موبایل و لایه تاریک (Backdrop Overlay)
+  // ==========================================
+  const mobileToggle = document.querySelector('.mobile-toggle');
+  const nav = document.querySelector('.boom-navigation');
+  const navLinks = document.querySelectorAll('.boom-navigation a');
+
+  // ساخت خودکار لایه تاریک پس‌زمینه در صورت عدم وجود
+  let overlay = document.querySelector('.mobile-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.className = 'mobile-overlay';
+    document.body.appendChild(overlay);
   }
 
-  function goToSlide(index) {
-    const maxIndex = getMaxIndex();
-    currentIndex = Math.max(0, Math.min(index, maxIndex));
-
-    const slideWidth = slides[0].offsetWidth + 20; // 20px gap
-    track.style.transform = `translateX(${currentIndex * slideWidth}px)`; // RTL sliding
-    updateDots();
+  function openMenu() {
+    mobileToggle?.classList.add('open');
+    nav?.classList.add('active');
+    overlay?.classList.add('active');
+    document.body.style.overflow = 'hidden'; // قفل اسکرول صفحه هنگام باز بودن منو
   }
 
-  nextBtn?.addEventListener('click', () => {
-    if (currentIndex < getMaxIndex()) goToSlide(currentIndex + 1);
-    else goToSlide(0);
+  function closeMenu() {
+    mobileToggle?.classList.remove('open');
+    nav?.classList.remove('active');
+    overlay?.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  mobileToggle?.addEventListener('click', () => {
+    if (nav?.classList.contains('active')) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
   });
 
-  prevBtn?.addEventListener('click', () => {
-    if (currentIndex > 0) goToSlide(currentIndex - 1);
-    else goToSlide(getMaxIndex());
-  });
+  overlay?.addEventListener('click', closeMenu);
+  navLinks.forEach(link => link.addEventListener('click', closeMenu));
 
-  window.addEventListener('resize', () => {
-    createDots();
-    goToSlide(currentIndex);
-  });
-
-  createDots();
-  goToSlide(0);
-}
-
-function initBoomAcademy() {
-  initScrollReveal(); 
-  initHeader(); 
-  initHero(); 
-  initSmoothNavigation(); 
-  initButtonGlow();
-  initCertificatesSlider();
-}
-
-document.readyState === 'loading' 
-  ? document.addEventListener('DOMContentLoaded', initBoomAcademy, { once: true }) 
-  : initBoomAcademy();
-  // اسکریپت عملکرد لایت‌باکس و زوم تصاویر گالری
-document.addEventListener('DOMContentLoaded', () => {
-  const modal = document.getElementById('imageLightbox');
-  const modalImg = document.getElementById('lightboxImg');
-  const closeBtn = document.querySelector('.lightbox-close');
+  // ==========================================
+  // ۴. مدیریت لایت‌باکس تصاویر (Lightbox Modal)
+  // ==========================================
   const triggers = document.querySelectorAll('.lightbox-trigger');
+  const modal = document.querySelector('.lightbox-modal');
+  const modalImg = modal?.querySelector('img');
+  const closeBtn = modal?.querySelector('.lightbox-close');
 
-  triggers.forEach(img => {
-    img.addEventListener('click', () => {
-      modal.style.display = 'flex';
-      modalImg.src = img.src;
+  function openModal(src) {
+    if (!modal || !modalImg) return;
+    modalImg.src = src;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    if (!modal) return;
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  triggers.forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const img = trigger.querySelector('img');
+      if (img?.src) {
+        openModal(img.src);
+      }
+    });
+  });
+
+  closeBtn?.addEventListener('click', closeModal);
+
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal?.classList.contains('active')) {
+      closeModal();
+    }
+  });
+
+  // ==========================================
+  // ۵. انیمیشن نمایش کارت‌ها هنگام اسکرول (Reveal)
+  // ==========================================
+  const revealElements = document.querySelectorAll('[data-reveal], [data-reveal-stagger]');
+  
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+  } else {
+    revealElements.forEach(el => el.classList.add('in'));
+  }
+
+  // ==========================================
+  // ۶. حالت هدر هنگام اسکرول و هایلایت منو
+  // ==========================================
+  const header = document.querySelector('.boom-header');
+  const sections = document.querySelectorAll('section[id], main[id]');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) {
+      header?.classList.add('scrolled');
+    } else {
+      header?.classList.remove('scrolled');
+    }
+
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 120;
+      if (window.scrollY >= sectionTop) {
+        current = section.getAttribute('id') || '';
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (current && link.getAttribute('href') === `#${current}`) {
+        link.classList.add('active');
+      }
+    });
+  });
+
+});
+// مدیریت لایت‌باکس تصاویر
+const modal = document.getElementById('imageLightbox');
+const modalImg = document.getElementById('lightboxImg');
+const closeBtn = document.querySelector('.lightbox-close');
+const triggers = document.querySelectorAll('.lightbox-trigger');
+
+if (modal && modalImg) {
+  triggers.forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const img = trigger.querySelector('img');
+      if (img && img.src) {
+        modalImg.src = img.src;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
     });
   });
 
   const closeModal = () => {
-    modal.style.display = 'none';
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
   };
 
-  if (closeBtn) {
-    closeBtn.addEventListener('click', closeModal);
-  }
+  closeBtn?.addEventListener('click', closeModal);
 
-  // بسته شدن با کلیک روی پس‌زمینه تاریک بیرون عکس
   modal.addEventListener('click', (e) => {
     if (e.target === modal) {
       closeModal();
     }
   });
 
-  // بسته شدن با کلید Esc کیبورد
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
       closeModal();
     }
   });
-});
+}   
