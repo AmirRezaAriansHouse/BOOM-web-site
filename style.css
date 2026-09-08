@@ -1,4 +1,4 @@
-/* style.css — MOBILE-OPTIMIZED & REFINED DESIGN SYSTEM */
+/* style.css — UNIFIED & CLEANED DESIGN SYSTEM */
 
 /* --------------------------------------------------------------------------
    1. VARIABLES & GLOBAL SETTINGS
@@ -63,11 +63,21 @@ a {
 
 ul { list-style: none; }
 
+button, a, .gallery-nav, .cert-nav, .mobile-toggle {
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-touch-callout: none !important;
+  user-select: none !important;
+  outline: none;
+}
+
 .wrap {
   width: min(var(--max-width), calc(100% - 32px));
   margin-inline: auto;
 }
 
+/* --------------------------------------------------------------------------
+   3. UTILITIES & TYPOGRAPHY
+   -------------------------------------------------------------------------- */
 .text-purple { color: var(--boom-purple-light); }
 .text-gold { color: var(--boom-gold); }
 .text-purple-glow {
@@ -76,9 +86,6 @@ ul { list-style: none; }
 }
 .text-center { text-align: center; }
 
-/* --------------------------------------------------------------------------
-   3. SECTIONS & TYPOGRAPHY
-   -------------------------------------------------------------------------- */
 .section {
   padding: 80px 0;
   position: relative;
@@ -179,38 +186,176 @@ ul { list-style: none; }
   left: 0;
   right: 0;
   z-index: 1000;
-  padding: 12px 0;
-  transition: all 0.4s var(--ease-out);
+  padding: 16px 0;
+  transition: padding 0.4s var(--ease-out), background 0.4s var(--ease-out);
+}
+
+.boom-header.scrolled {
+  padding: 8px 0;
+}
+
+.boom-header.scrolled .nav-shell {
+  background: rgba(12, 12, 18, 0.88);
+  border-color: rgba(118, 87, 255, 0.3);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(118, 87, 255, 0.15);
 }
 
 .nav-shell {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 16px;
-  background: rgba(18, 18, 26, 0.75);
+  padding: 10px 20px;
+  background: rgba(18, 18, 26, 0.65);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-lg);
+  transition: all 0.4s var(--ease-out);
 }
 
 .boom-brand {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
+  transition: transform 0.3s var(--ease-out);
 }
 
-.brand-mark { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; }
+.boom-brand:hover { transform: scale(1.02); }
+
+.brand-mark {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s var(--ease-out), filter 0.4s var(--ease-out);
+}
+
+.boom-brand:hover .brand-mark {
+  transform: rotate(-10deg) scale(1.1);
+  filter: drop-shadow(0 0 10px var(--boom-purple-glow));
+}
+
 .brand-name { font-size: 1.15rem; font-weight: 800; color: #ffffff; display: inline-flex; align-items: baseline; gap: 0.3rem; }
 .brand-en { font-size: 0.8rem; font-weight: 700; color: var(--boom-gold); }
 
-.boom-navigation ul { display: flex; gap: 24px; }
-.boom-navigation a { font-size: 0.85rem; font-weight: 600; color: var(--boom-gray); }
-.boom-navigation a:hover { color: var(--boom-white); }
+.boom-navigation ul { 
+  display: flex; 
+  gap: 28px; 
+  align-items: center;
+}
 
-.nav-cta { padding: 8px 16px; font-size: 0.8rem; border-radius: var(--radius-sm); }
-.nav-cta svg { width: 14px; height: 14px; }
+.boom-navigation a {
+  position: relative;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--boom-gray);
+  padding: 6px 0;
+  transition: color 0.3s var(--ease-out), text-shadow 0.3s var(--ease-out);
+}
+
+.boom-navigation a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--boom-purple-light), var(--boom-cyan));
+  border-radius: 2px;
+  transition: width 0.35s var(--ease-out);
+  box-shadow: 0 0 8px var(--boom-purple-glow);
+}
+
+.boom-navigation a:hover,
+.boom-navigation a.active {
+  color: var(--boom-white);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.boom-navigation a:hover::after,
+.boom-navigation a.active::after {
+  width: 100%;
+}
+
+.nav-cta {
+  position: relative;
+  padding: 10px 20px;
+  font-size: 0.82rem;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  z-index: 1;
+}
+
+.nav-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s var(--ease-out);
+  z-index: 2;
+}
+
+.nav-cta:hover::before { left: 100%; }
+
+.nav-cta:hover {
+  box-shadow: 0 8px 20px var(--boom-purple-glow);
+  transform: translateY(-2px);
+}
+
+.nav-cta svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.3s var(--ease-out);
+}
+
+.nav-cta:hover svg { transform: translateX(-4px); }
+
+/* منوی همبرگری و لایه اورلی */
+.mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 1001;
+  padding: 0;
+}
+
+.mobile-toggle span {
+  width: 100%;
+  height: 3px;
+  background-color: var(--boom-white);
+  border-radius: 3px;
+  transition: all 0.3s var(--ease-out);
+}
+
+.mobile-toggle.open span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
+.mobile-toggle.open span:nth-child(2) { opacity: 0; }
+.mobile-toggle.open span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
+
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s var(--ease-out);
+}
+
+.mobile-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
 
 /* --------------------------------------------------------------------------
    6. HERO SECTION
@@ -330,11 +475,7 @@ ul { list-style: none; }
 }
 
 .gallery-slider-container::-webkit-scrollbar { display: none; }
-
-.gallery-track {
-  display: flex;
-  gap: 16px;
-}
+.gallery-track { display: flex; gap: 16px; }
 
 .gallery-slide {
   flex: 0 0 calc(33.333% - 11px);
@@ -358,21 +499,7 @@ ul { list-style: none; }
 
 .gallery-slide:hover img { transform: scale(1.05); }
 
-.item-caption {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 12px 16px;
-  background: linear-gradient(transparent, rgba(0,0,0,0.92));
-  font-size: 0.8rem;
-  font-weight: 700;
-  display: flex;
-  justify-content: space-between;
-  color: #fff;
-}
-
-.item-caption span:last-child { color: var(--boom-purple-light); }
+.item-caption { display: none !important; }
 
 .gallery-nav {
   background: var(--boom-card);
@@ -388,12 +515,6 @@ ul { list-style: none; }
   z-index: 10;
   transition: all 0.3s var(--ease-out);
   flex-shrink: 0;
-}
-
-.gallery-nav:hover {
-  background: var(--boom-purple);
-  border-color: var(--boom-purple-light);
-  box-shadow: 0 0 18px var(--boom-purple-glow);
 }
 
 /* --------------------------------------------------------------------------
@@ -460,7 +581,6 @@ ul { list-style: none; }
 }
 
 .cert-slider-container::-webkit-scrollbar { display: none; }
-
 .cert-track { display: flex; gap: 16px; }
 
 .cert-slide {
@@ -503,62 +623,157 @@ ul { list-style: none; }
   transition: all 0.3s var(--ease-out);
 }
 
-.cert-nav:hover { background: var(--boom-purple); border-color: var(--boom-purple-light); box-shadow: 0 0 15px var(--boom-purple-glow); }
-
 /* --------------------------------------------------------------------------
    11. PROCESS TIMELINE
    -------------------------------------------------------------------------- */
 .process { position: relative; }
-.timeline-wrapper { position: relative; max-width: 1100px; margin: 2rem auto 0 auto; padding: 0 10px; }
-.timeline-line {
-  position: absolute; top: 25px; left: 15%; right: 15%; height: 2px;
-  background: linear-gradient(90deg, rgba(118, 87, 255, 0.2), #7657ff, rgba(118, 87, 255, 0.2));
-  z-index: 1;
+
+.timeline-wrapper {
+  position: relative;
+  max-width: 1100px;
+  margin: 2rem auto 0 auto;
+  padding: 0 10px;
 }
 
-.timeline-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; position: relative; z-index: 2; }
+.timeline-line {
+  position: absolute;
+  top: 46px;
+  left: 15%;
+  right: 15%;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(118, 87, 255, 0.2), #7657ff, rgba(118, 87, 255, 0.2));
+  z-index: 1;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.8s var(--ease-out);
+}
+
+.timeline-wrapper.in .timeline-line { transform: scaleX(1); }
+
+.timeline-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  position: relative;
+  z-index: 2;
+}
+
 .t-step {
-  background: rgba(22, 22, 34, 0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  background: rgba(22, 22, 34, 0.75);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px; padding: 24px 16px; text-align: center;
-  transition: all 0.3s ease; backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 24px 20px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  transition: transform 0.4s var(--ease-out), border-color 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+}
+
+.t-step:hover {
+  transform: translateY(-8px);
+  border-color: rgba(118, 87, 255, 0.5);
+  box-shadow: 0 12px 30px rgba(118, 87, 255, 0.2);
 }
 
 .t-dot {
-  width: 44px; height: 44px; border-radius: 50%;
-  background: #0d0d14; border: 2px solid #7657ff;
-  color: #f5d77a; font-size: 1.1rem; font-weight: 800;
-  display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 16px auto; box-shadow: 0 0 12px rgba(118, 87, 255, 0.4);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #12121a;
+  border: 2px solid #7657ff;
+  color: #f5d77a;
+  font-size: 1.1rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  box-shadow: 0 0 14px rgba(118, 87, 255, 0.4);
+  transition: all 0.3s ease;
 }
 
-.t-step h3 { font-size: 1.1rem; font-weight: 700; color: #ffffff; margin-bottom: 8px; }
-.t-step p { font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); margin: 0; }
+.t-step h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.t-step p {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  line-height: 1.7;
+}
+
+[data-reveal-stagger].in > .t-step:nth-child(1) { transition-delay: 0.15s; }
+[data-reveal-stagger].in > .t-step:nth-child(2) { transition-delay: 0.3s; }
+[data-reveal-stagger].in > .t-step:nth-child(3) { transition-delay: 0.45s; }
 
 /* --------------------------------------------------------------------------
    12. LIGHTBOX MODAL
    -------------------------------------------------------------------------- */
 .lightbox-modal {
-  display: none;
   position: fixed;
-  z-index: 9999;
-  padding-top: 40px;
-  left: 0; top: 0; width: 100%; height: 100%;
-  background-color: rgba(5, 5, 8, 0.94);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  padding: 20px;
+}
+
+.lightbox-modal.active {
+  opacity: 1;
+  visibility: visible;
 }
 
 .lightbox-content {
-  margin: auto; display: block;
-  max-width: 90%; max-height: 80vh;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 90%;
+  max-height: 85vh;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+  object-fit: contain;
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
 }
 
+.lightbox-modal.active .lightbox-content { transform: scale(1); }
+
 .lightbox-close {
-  position: absolute; top: 20px; left: 24px;
-  color: #f1f5f9; font-size: 36px; cursor: pointer;
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  color: #ffffff;
+  font-size: 32px;
+  cursor: pointer;
+  line-height: 1;
+  z-index: 10000;
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
+
+.lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.08);
+}
+
+.lightbox-trigger { cursor: pointer; }
 
 /* --------------------------------------------------------------------------
    13. CTA & FOOTER
@@ -591,8 +806,17 @@ footer {
 [data-reveal].in, [data-reveal-stagger].in > * { opacity: 1; transform: translateY(0); }
 
 /* --------------------------------------------------------------------------
-   15. MOBILE-FIRST RESPONSIVE BREAKPOINTS (بهینه‌سازی کامل گوشی)
+   15. RESPONSIVE BREAKPOINTS & TOUCH OPTIMIZATIONS
    -------------------------------------------------------------------------- */
+@media (hover: hover) {
+  .gallery-nav:hover, 
+  .cert-nav:hover {
+    background: var(--boom-purple);
+    border-color: var(--boom-purple-light);
+    box-shadow: 0 0 18px var(--boom-purple-glow);
+  }
+}
+
 @media (max-width: 992px) {
   .hero-grid, .coach-container { grid-template-columns: 1fr; }
   .cert-slide, .gallery-slide { flex: 0 0 calc(50% - 8px); }
@@ -600,255 +824,12 @@ footer {
 }
 
 @media (max-width: 768px) {
-  /* تنظیمات عمومی موبایل */
   .section { padding: 50px 0; }
-  .boom-navigation { display: none !important; }
-  
-  /* هدر */
   .boom-header { padding: 8px 0; }
   .nav-shell { padding: 6px 12px; }
 
-  /* هیرو */
-  .hero { padding: 100px 0 40px 0; min-height: auto; }
-  .hero-grid { grid-template-columns: 1fr; gap: 24px; text-align: center; }
-  .hero-brand-custom-header { width: 100%; justify-content: center; }
-  .hero-lead { margin-inline: auto; }
-  .hero-actions { flex-direction: column; width: 100%; gap: 10px; }
-  .hero-actions .btn { width: 100%; }
-  .hero-badges { flex-wrap: wrap; justify-content: center; gap: 10px 16px; }
-  .hero-img { height: 280px; }
-
-  /* مربی */
-  .coach-container { padding: 20px; text-align: center; gap: 24px; }
-  .coach-photo { height: 300px; }
-  .coach-highlights { justify-content: center; flex-wrap: wrap; gap: 12px; }
-  .coach-quote { border-right: none; border-bottom: 2px solid var(--boom-gold); padding: 0 0 10px 0; }
-  .coach-details .btn { width: 100%; }
-
-  /* حذف فلش‌های اسلایدر در موبایل جهت استفاده از عرض ۱۰۰٪ و سوایپ لمسی */
-  .gallery-nav, .cert-nav { display: none !important; }
-  
-  .gallery-slide, .cert-slide {
-    flex: 0 0 85vw !important;
-    min-width: 85vw !important;
-    height: 240px;
-  }
-  
-  .cert-slide { height: auto; }
-
-  /* لیست ویژگی‌ها */
-  .feature-item {
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: right;
-    gap: 8px;
-  }
-  .feature-num { margin-left: 0; align-self: flex-start; }
-
-  /* تایم‌لاین */
-  .timeline-steps { grid-template-columns: 1fr; gap: 16px; }
-}
-
-@media (max-width: 480px) {
-  .hero-brand-custom-header { flex-direction: column; gap: 0.4rem; padding: 0.6rem; }
-  .divider-vertical { width: 60%; height: 1px; }
-  .gallery-slide, .cert-slide {
-    flex: 0 0 88vw !important;
-    min-width: 88vw !important;
-  }
-}
-/* --------------------------------------------------------------------------
-   5. HEADER & NAVIGATION (ENHANCED & ANIMATED)
-   -------------------------------------------------------------------------- */
-.boom-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  padding: 16px 0;
-  transition: padding 0.4s var(--ease-out), background 0.4s var(--ease-out);
-}
-
-/* حالت هدر هنگام اسکرول صفحه */
-.boom-header.scrolled {
-  padding: 8px 0;
-}
-
-.boom-header.scrolled .nav-shell {
-  background: rgba(12, 12, 18, 0.88);
-  border-color: rgba(118, 87, 255, 0.3);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(118, 87, 255, 0.15);
-}
-
-.nav-shell {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
-  background: rgba(18, 18, 26, 0.65);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-lg);
-  transition: all 0.4s var(--ease-out);
-}
-
-/* انیمیشن لوگو */
-.boom-brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  transition: transform 0.3s var(--ease-out);
-}
-
-.boom-brand:hover {
-  transform: scale(1.02);
-}
-
-.brand-mark {
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.4s var(--ease-out), filter 0.4s var(--ease-out);
-}
-
-.boom-brand:hover .brand-mark {
-  transform: rotate(-10deg) scale(1.1);
-  filter: drop-shadow(0 0 10px var(--boom-purple-glow));
-}
-
-.brand-name { font-size: 1.15rem; font-weight: 800; color: #ffffff; display: inline-flex; align-items: baseline; gap: 0.3rem; }
-.brand-en { font-size: 0.8rem; font-weight: 700; color: var(--boom-gold); }
-
-/* انیمیشن لینک‌های منو */
-.boom-navigation ul { 
-  display: flex; 
-  gap: 28px; 
-  align-items: center;
-}
-
-.boom-navigation a {
-  position: relative;
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--boom-gray);
-  padding: 6px 0;
-  transition: color 0.3s var(--ease-out), text-shadow 0.3s var(--ease-out);
-}
-
-/* انیمیشن خط کشویی زیر لینک‌ها */
-.boom-navigation a::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 0%;
-  height: 2px;
-  background: linear-gradient(90deg, var(--boom-purple-light), var(--boom-cyan));
-  border-radius: 2px;
-  transition: width 0.35s var(--ease-out);
-  box-shadow: 0 0 8px var(--boom-purple-glow);
-}
-
-.boom-navigation a:hover,
-.boom-navigation a.active {
-  color: var(--boom-white);
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-}
-
-.boom-navigation a:hover::after,
-.boom-navigation a.active::after {
-  width: 100%;
-}
-
-/* انیمیشن دکمه اقدام (CTA) */
-.nav-cta {
-  position: relative;
-  padding: 10px 20px;
-  font-size: 0.82rem;
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-  z-index: 1;
-}
-
-/* انیمیشن عبور نور روی دکمه */
-.nav-cta::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.6s var(--ease-out);
-  z-index: 2;
-}
-
-.nav-cta:hover::before {
-  left: 100%;
-}
-
-.nav-cta:hover {
-  box-shadow: 0 8px 20px var(--boom-purple-glow);
-  transform: translateY(-2px);
-}
-
-.nav-cta svg {
-  width: 14px;
-  height: 14px;
-  transition: transform 0.3s var(--ease-out);
-}
-
-.nav-cta:hover svg {
-  transform: translateX(-4px); /* جابه‌جایی آیکون در جهت RTL */
-}
-/* --------------------------------------------------------------------------
-   استایل دکمه منوی همبرگری و دکمه‌های اسلایدر در موبایل
-   -------------------------------------------------------------------------- */
-
-/* استایل دکمه همبرگری موبایل */
-.mobile-toggle {
-  display: none;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 28px;
-  height: 20px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  z-index: 1001;
-  padding: 0;
-}
-
-.mobile-toggle span {
-  width: 100%;
-  height: 3px;
-  background-color: var(--boom-white);
-  border-radius: 3px;
-  transition: all 0.3s var(--ease-out);
-}
-
-/* انیمیشن تبدیل دکمه همبرگری به X هنگام باز شدن */
-.mobile-toggle.open span:nth-child(1) {
-  transform: translateY(8.5px) rotate(45deg);
-}
-.mobile-toggle.open span:nth-child(2) {
-  opacity: 0;
-}
-.mobile-toggle.open span:nth-child(3) {
-  transform: translateY(-8.5px) rotate(-45deg);
-}
-
-@media (max-width: 768px) {
-  /* نمایش دکمه منوی همبرگری در موبایل */
-  .mobile-toggle {
-    display: flex;
-  }
-
-  /* تنظیمات کشوی منوی موبایل */
+  /* منوی موبایل */
+  .mobile-toggle { display: flex; }
   .boom-navigation {
     position: fixed;
     top: 65px;
@@ -864,176 +845,20 @@ footer {
     display: block !important;
     box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
   }
+  .boom-navigation.active { right: 0; }
+  .boom-navigation ul { flex-direction: column; align-items: flex-start; gap: 20px; }
 
-  /* نمایش منو هنگام کلیک روی دکمه همبرگری */
-  .boom-navigation.active {
-    right: 0;
-  }
+  /* هیرو */
+  .hero { padding: 100px 0 40px 0; min-height: auto; }
+  .hero-grid { grid-template-columns: 1fr; gap: 24px; text-align: center; }
+  .hero-brand-custom-header { width: 100%; justify-content: center; }
+  .hero-lead { margin-inline: auto; }
+  .hero-actions { flex-direction: column; width: 100%; gap: 10px; }
+  .hero-actions .btn { width: 100%; }
+  .hero-badges { flex-wrap: wrap; justify-content: center; gap: 10px 16px; }
+  .hero-img { height: 280px; }
 
-  .boom-navigation ul {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-  }
-
-  /* بازگرداندن و نمایش دکمه‌های فلش اسلایدرها در موبایل */
-  .gallery-nav, 
-  .cert-nav {
-    display: flex !important;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 36px;
-    height: 36px;
-    font-size: 0.8rem;
-    background: rgba(24, 24, 36, 0.85);
-    backdrop-filter: blur(8px);
-  }
-
-  .gallery-prev, .cert-prev { right: 8px; }
-  .gallery-next, .cert-next { left: 8px; }
-}
-/* --------------------------------------------------------------------------
-   رفع مشکل چسبیدن رنگ بنفش دکمه‌ها در موبایل (Sticky Hover Fix)
-   -------------------------------------------------------------------------- */
-
-/* ۱. حذف هایلایت آبی/بنفش پیش‌فرض مرورگرهای موبایل */
-button, a, .gallery-nav, .cert-nav {
-  -webkit-tap-highlight-color: transparent;
-  outline: none;
-}
-
-/* ۲. اعمال استایل hover فقط برای دستگاه‌هایی که موس دارند (دسکتاپ) */
-@media (hover: hover) {
-  .gallery-nav:hover, 
-  .cert-nav:hover {
-    background: var(--boom-purple) !important;
-    border-color: var(--boom-purple-light) !important;
-    box-shadow: 0 0 18px var(--boom-purple-glow) !important;
-  }
-}
-
-/* ۳. استایل لحظه‌ای (فقط زمان فشردن با انگشت) برای موبایل */
-.gallery-nav:active, 
-.cert-nav:active {
-  background: var(--boom-purple) !important;
-  transform: translateY(-50%) scale(0.92) !important;
-  box-shadow: 0 0 12px var(--boom-purple-glow) !important;
-}
-/* --------------------------------------------------------------------------
-   حل قطعی مشکل بنفش ماندن دکمه‌ها در موبایل
-   -------------------------------------------------------------------------- */
-
-/* ۱. حذف هایلایت آبی/خاکستری پیش‌فرض لمس مرورگرها */
-.gallery-nav, 
-.cert-nav,
-.btn {
-  -webkit-tap-highlight-color: transparent !important;
-  -webkit-touch-callout: none !important;
-  user-select: none !important;
-}
-
-/* ۲. خنثی‌سازی کامل حالت hover در صفحه نمایش‌های لمسی (موبایل و تبلت) */
-@media (hover: none), (max-width: 768px) {
-  .gallery-nav:hover,
-  .cert-nav:hover {
-    background: var(--boom-card) !important;
-    border-color: rgba(255, 255, 255, 0.15) !important;
-    box-shadow: none !important;
-    color: var(--boom-white) !important;
-  }
-
-  /* رنگ بنفش فقط و فقط در همان میلی‌ثانیه‌ای که دست روی دکمه است نشان داده می‌شود */
-  .gallery-nav:active,
-  .cert-nav:active {
-    background: var(--boom-purple) !important;
-    border-color: var(--boom-purple-light) !important;
-    box-shadow: 0 0 15px var(--boom-purple-glow) !important;
-    transform: translateY(-50%) scale(0.92) !important;
-  }
-}
-/* --------------------------------------------------------------------------
-   انتقال دکمه‌های اسلایدر به زیر تصاویر در موبایل (جهت جلوگیری از مزاحمت)
-   -------------------------------------------------------------------------- */
-@media (max-width: 768px) {
-
-  /* ۱. تغییر چیدمان باکس اسلایدر به شبکه ۲ ردیفه */
-  .gallery-slider-wrapper,
-  .cert-slider-wrapper {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: 
-      "slider slider"
-      "prev next";
-    gap: 14px;
-    align-items: center;
-  }
-
-  /* ۲. قرارگیری اسلایدر در ردیف اول (عرض کامل) */
-  .gallery-slider-container,
-  .cert-slider-container {
-    grid-area: slider;
-    width: 100%;
-  }
-
-  /* ۳. انتقال دکمه قبلی به سمت راست زیر اسلایدر (مناسب RTL) */
-  .gallery-prev, .cert-prev {
-    grid-area: prev;
-    justify-self: end;
-  }
-
-  /* ۴. انتقال دکمه بعدی به سمت چپ زیر اسلایدر */
-  .gallery-next, .cert-next {
-    grid-area: next;
-    justify-self: start;
-  }
-
-  /* ۵. استایل لمسی و مدرن برای دکمه‌ها در زیر اسلایدر */
-  .gallery-nav, 
-  .cert-nav {
-    display: flex !important;
-    position: static !important; /* خروج از حالت روی عکس */
-    transform: none !important;
-    width: 46px !important;
-    height: 46px !important;
-    border-radius: 12px !important;
-    background: rgba(24, 24, 36, 0.95) !important;
-    border: 1px solid rgba(118, 87, 255, 0.35) !important;
-    color: var(--boom-white) !important;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
-  }
-}
-/* --------------------------------------------------------------------------
-   کدهای تکمیلی ارتقای UX موبایل (Mobile Optimization Final)
-   -------------------------------------------------------------------------- */
-
-/* ۱. لایه تیره پس‌زمینه هنگام باز شدن منو */
-.mobile-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  z-index: 999;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s var(--ease-out);
-}
-
-.mobile-overlay.active {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* ۲. غیرفعال کردن هایلایت آبی/بنفش پیش‌فرض لمس مرورگر */
-button, a, .gallery-nav, .cert-nav, .mobile-toggle {
-  -webkit-tap-highlight-color: transparent !important;
-  -webkit-touch-callout: none !important;
-  user-select: none !important;
-}
-
-@media (max-width: 768px) {
-  /* ۳. قرارگیری دکمه‌های اسلایدر زیر تصاویر به صورت چیدمان شبکه‌ای */
+  /* اسلایدرها و دکمه‌های کنترلی موبایل */
   .gallery-slider-wrapper,
   .cert-slider-wrapper {
     display: grid !important;
@@ -1051,18 +876,10 @@ button, a, .gallery-nav, .cert-nav, .mobile-toggle {
     width: 100%;
   }
 
-  .gallery-prev, .cert-prev {
-    grid-area: prev;
-    justify-self: end;
-  }
+  .gallery-prev, .cert-prev { grid-area: prev; justify-self: end; }
+  .gallery-next, .cert-next { grid-area: next; justify-self: start; }
 
-  .gallery-next, .cert-next {
-    grid-area: next;
-    justify-self: start;
-  }
-
-  .gallery-nav, 
-  .cert-nav {
+  .gallery-nav, .cert-nav {
     display: flex !important;
     position: static !important;
     transform: none !important;
@@ -1075,7 +892,26 @@ button, a, .gallery-nav, .cert-nav, .mobile-toggle {
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
   }
 
-  /* ۴. جابه‌جایی دکمه بستن لایت‌باکس (X) به پایین صفحه (Thumb Zone) */
+  .gallery-slide, .cert-slide {
+    flex: 0 0 85vw !important;
+    min-width: 85vw !important;
+    height: 240px;
+  }
+  .cert-slide { height: auto; }
+
+  /* مربی */
+  .coach-container { padding: 20px; text-align: center; gap: 24px; }
+  .coach-photo { height: 300px; }
+  .coach-highlights { justify-content: center; flex-wrap: wrap; gap: 12px; }
+  .coach-quote { border-right: none; border-bottom: 2px solid var(--boom-gold); padding: 0 0 10px 0; }
+  .coach-details .btn { width: 100%; }
+
+  /* ویژگی‌ها و تایم‌لاین */
+  .feature-item { flex-direction: column; align-items: flex-start; text-align: right; gap: 8px; }
+  .feature-num { margin-left: 0; align-self: flex-start; }
+  .timeline-steps { grid-template-columns: 1fr; gap: 16px; }
+
+  /* بستن لایت‌باکس در شست‌رس موبایل */
   .lightbox-close {
     top: auto !important;
     bottom: 30px !important;
@@ -1096,23 +932,27 @@ button, a, .gallery-nav, .cert-nav, .mobile-toggle {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
   }
 
-  /* ۵. اصلاح فونت‌های کوچک برای ارتقای خوانایی در صفحه موبایل */
-  .coach-label-sm,
-  .cert-badge,
-  .tag,
-  .h-badge,
-  .c-hl {
-    font-size: 0.78rem !important; /* حداقل ۱۲ پیکسل استاندارد */
+  .coach-label-sm, .cert-badge, .tag, .h-badge, .c-hl {
+    font-size: 0.78rem !important;
   }
 }
 
-/* ۶. خنثی‌سازی حالت hover در گوشی و فعال‌سازی استایل لحظه‌ای :active */
+@media (max-width: 480px) {
+  .hero-brand-custom-header { flex-direction: column; gap: 0.4rem; padding: 0.6rem; }
+  .divider-vertical { width: 60%; height: 1px; }
+  .gallery-slide, .cert-slide {
+    flex: 0 0 88vw !important;
+    min-width: 88vw !important;
+  }
+}
+
 @media (hover: none), (max-width: 768px) {
   .gallery-nav:hover,
   .cert-nav:hover,
   .btn:hover {
     transform: none !important;
     box-shadow: none !important;
+    background: var(--boom-card) !important;
   }
 
   .gallery-nav:active,
@@ -1122,75 +962,4 @@ button, a, .gallery-nav, .cert-nav, .mobile-toggle {
     box-shadow: 0 0 15px var(--boom-purple-glow) !important;
     transform: scale(0.92) !important;
   }
-}
-/* ==========================================
-   استایل لایت‌باکس بزرگ‌نمایی عکس‌ها
-   ========================================== */
-.lightbox-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.88);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  z-index: 9999; /* قرارگیری روی تمامی عناصر و هدر */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-  padding: 20px;
-}
-
-/* نمایش مودال هنگام فعال شدن */
-.lightbox-modal.active {
-  opacity: 1;
-  visibility: visible;
-}
-
-.lightbox-content {
-  max-width: 90%;
-  max-height: 85vh;
-  border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
-  object-fit: contain;
-  transform: scale(0.9);
-  transition: transform 0.3s ease;
-}
-
-.lightbox-modal.active .lightbox-content {
-  transform: scale(1);
-}
-
-/* دکمه بستن (X) */
-.lightbox-close {
-  position: absolute;
-  top: 25px;
-  left: 25px;
-  color: #ffffff;
-  font-size: 32px;
-  cursor: pointer;
-  line-height: 1;
-  z-index: 10000;
-  width: 48px;
-  height: 48px;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-
-.lightbox-close:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: scale(1.08);
-}
-
-/* نشانگر کلیک روی تصاویر گالری */
-.lightbox-trigger {
-  cursor: pointer;
-}
-.item-caption {
-  display: none !important;
 }
