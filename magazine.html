@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="pageTitle">مجله BOOM | آکادمی تخصصی ورزشی انفجار</title>
+  <meta id="pageDescription" name="description" content="مقالات تخصصی درباره حرکات اصلاحی، آمادگی جسمانی و تمرین اصولی از آکادمی انفجار (BOOM).">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('boom-theme') === 'light') {
+          document.documentElement.classList.add('light-theme');
+        }
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body class="boom-dark">
+
+  <!-- Header -->
+  <header class="boom-header">
+    <div class="wrap">
+      <div class="nav-shell">
+        <a href="index.html#top" class="boom-brand">
+          <img src="images/brand/boom-logo.jpg" alt="انفجار BOOM" class="brand-logo-img">
+          <span class="brand-name">انفجار <span class="brand-en">BOOM</span></span>
+        </a>
+
+        <nav class="boom-navigation">
+          <ul>
+            <li><a href="index.html#club">باشگاه</a></li>
+            <li><a href="index.html#address">آدرس</a></li>
+            <li><a href="index.html#gallery">گالری</a></li>
+            <li><a href="index.html#coach">مربی</a></li>
+            <li><a href="index.html#certificates">گواهینامه‌ها</a></li>
+            <li><a href="index.html#process">مسیر تمرین</a></li>
+          </ul>
+
+          <div class="mobile-nav-actions">
+            <a href="magazine.html" class="btn btn-mag-red">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg>
+              <span>مجله BOOM</span>
+            </a>
+            <a href="index.html#contact" class="btn btn-gold">
+              <span>رزرو ارزیابی</span>
+            </a>
+          </div>
+        </nav>
+
+        <div class="nav-actions">
+          <button class="nav-icon-btn nav-theme-toggle" id="themeToggle" aria-label="تغییر تم" title="تغییر تم روشن/تیره">
+            <svg class="icon-moon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"></path></svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
+          </button>
+
+          <a href="magazine.html" class="nav-icon-btn nav-mag" aria-label="مجله BOOM" title="مجله BOOM">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg>
+          </a>
+
+          <a href="index.html#contact" class="nav-icon-btn nav-reserve" aria-label="رزرو ارزیابی" title="رزرو ارزیابی">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"></rect><path d="M16 2v4M8 2v4M3 10h18"></path><path d="m9 16 2 2 4-4"></path></svg>
+          </a>
+
+          <button class="mobile-toggle" aria-label="باز کردن منو">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- Magazine Hero -->
+    <section class="section mag-hero">
+      <div class="wrap">
+        <div class="mag-hero-top" data-reveal>
+          <span class="mag-kicker">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg>
+            مجله BOOM
+          </span>
+          <h1>مقالات و <span class="text-mag-accent">دانستنی‌های تخصصی ورزشی</span></h1>
+          <p class="mag-hero-sub">راهنماها و مطالب علمی از تیم آکادمی انفجار، درباره حرکات اصلاحی، آمادگی جسمانی و تمرین اصولی</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Article -->
+    <section class="section mag-featured-section" id="magFeaturedSection" style="display:none;">
+      <div class="wrap">
+        <a href="#" id="magFeatured" class="mag-featured" data-reveal>
+          <div class="mag-featured-media">
+            <svg viewBox="0 0 24 24" width="46" height="46" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg>
+          </div>
+          <div class="mag-featured-body">
+            <span class="mag-featured-label">جدیدترین مقاله</span>
+            <span class="mag-card-tag" id="featuredTag">دسته‌بندی</span>
+            <h2 id="featuredTitle">عنوان مقاله</h2>
+            <p id="featuredExcerpt">خلاصه مقاله</p>
+            <div class="mag-featured-meta">
+              <span id="featuredDate">تاریخ</span>
+              <span class="mag-dot">•</span>
+              <span id="featuredReadTime">۲ دقیقه مطالعه</span>
+            </div>
+            <span class="mag-read-link">مطالعه مقاله ←</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Article List View -->
+    <section class="section mag-list" id="magListView">
+      <div class="wrap">
+        <div class="mag-list-head" data-reveal>
+          <h3>سایر مقالات</h3>
+        </div>
+        <div id="articleGrid" class="mag-grid" data-reveal-stagger>
+          <!-- کارت‌های مقاله با جاوااسکریپت رندر می‌شوند -->
+        </div>
+        <p id="emptyState" class="mag-empty" style="display:none;">
+          هنوز مقاله‌ای منتشر نشده. به‌زودی مطالب تخصصی اینجا اضافه می‌شوند.
+        </p>
+      </div>
+    </section>
+
+    <!-- Article Detail View -->
+    <section class="section mag-detail" id="magDetailView" style="display:none;">
+      <div class="wrap">
+        <a href="magazine.html" class="mag-back">→ بازگشت به مجله</a>
+        <div class="mag-article" data-reveal>
+          <span class="tag" id="articleCategory">دسته‌بندی</span>
+          <h1 id="articleTitle">عنوان مقاله</h1>
+          <div class="mag-featured-meta mag-date">
+            <span id="articleDate">تاریخ</span>
+            <span class="mag-dot">•</span>
+            <span id="articleReadTime">۲ دقیقه مطالعه</span>
+          </div>
+          <div class="mag-article-body" id="articleContent"></div>
+        </div>
+        <div class="mag-cta-banner" data-reveal>
+          <p>آماده‌ای بدنت را به <strong>سطح بعدی</strong> ببری؟ همین امروز جلسه ارزیابی رزرو کن.</p>
+          <a href="index.html#contact" class="btn btn-gold">تماس و رزرو ارزیابی</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap footer-content">
+      <p>© آکادمی تخصصی ورزشی انفجار | BOOM — تمامی حقوق محفوظ است.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="articles.js"></script>
+  <script>
+    (function () {
+      const listView = document.getElementById('magListView');
+      const detailView = document.getElementById('magDetailView');
+      const grid = document.getElementById('articleGrid');
+      const emptyState = document.getElementById('emptyState');
+      const featuredSection = document.getElementById('magFeaturedSection');
+
+      function readTime(article) {
+        const words = (article.content || '').replace(/<[^>]*>/g, ' ').trim().split(/\s+/).length;
+        const minutes = Math.max(1, Math.round(words / 150));
+        return `${minutes} دقیقه مطالعه`;
+      }
+
+      function formatCard(article, index) {
+        const el = document.createElement('a');
+        el.href = `magazine.html?slug=${encodeURIComponent(article.slug)}`;
+        el.className = 'mag-card';
+        el.innerHTML = `
+          <span class="mag-card-index">${String(index + 1).padStart(2, '۰')}</span>
+          <span class="mag-card-tag">${article.category}</span>
+          <h3>${article.title}</h3>
+          <p>${article.excerpt}</p>
+          <div class="mag-card-footer">
+            <span class="mag-card-date">${article.date}</span>
+            <span class="mag-card-read">${readTime(article)}</span>
+          </div>
+        `;
+        return el;
+      }
+
+      function renderFeatured(article) {
+        featuredSection.style.display = 'block';
+        const featured = document.getElementById('magFeatured');
+        featured.href = `magazine.html?slug=${encodeURIComponent(article.slug)}`;
+        document.getElementById('featuredTag').textContent = article.category;
+        document.getElementById('featuredTitle').textContent = article.title;
+        document.getElementById('featuredExcerpt').textContent = article.excerpt;
+        document.getElementById('featuredDate').textContent = article.date;
+        document.getElementById('featuredReadTime').textContent = readTime(article);
+      }
+
+      function renderList(articles) {
+        if (!articles.length) {
+          emptyState.style.display = 'block';
+          return;
+        }
+
+        if (articles.length > 1) {
+          renderFeatured(articles[0]);
+          articles.slice(1).forEach((article, i) => grid.appendChild(formatCard(article, i)));
+        } else {
+          renderFeatured(articles[0]);
+        }
+      }
+
+      function renderDetail(article) {
+        listView.style.display = 'none';
+        featuredSection.style.display = 'none';
+        detailView.style.display = 'block';
+
+        document.getElementById('articleCategory').textContent = article.category;
+        document.getElementById('articleTitle').textContent = article.title;
+        document.getElementById('articleDate').textContent = article.date;
+        document.getElementById('articleReadTime').textContent = readTime(article);
+        document.getElementById('articleContent').innerHTML = article.content;
+
+        document.getElementById('pageTitle').textContent = `${article.title} | مجله BOOM`;
+        document.getElementById('pageDescription').setAttribute('content', article.excerpt);
+      }
+
+      try {
+        const articles = typeof ARTICLES !== 'undefined' ? ARTICLES : [];
+        const params = new URLSearchParams(window.location.search);
+        const slug = params.get('slug');
+
+        if (slug) {
+          const article = articles.find(a => a.slug === slug);
+          if (article) {
+            renderDetail(article);
+          } else {
+            renderList(articles);
+          }
+        } else {
+          renderList(articles);
+        }
+
+        document.querySelectorAll('[data-reveal], [data-reveal-stagger]').forEach(el => {
+          el.classList.add('in');
+        });
+      } catch (err) {
+        emptyState.textContent = 'خطا در بارگذاری مقالات.';
+        emptyState.style.display = 'block';
+      }
+    })();
+  </script>
+</body>
+</html>
