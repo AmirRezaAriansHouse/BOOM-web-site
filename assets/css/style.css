@@ -449,9 +449,9 @@ html.light-theme .nav-theme-toggle .icon-moon { display: none; }
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  width: 44px;
-  height: 44px;
+  gap: 8px;
+  width: 52px;
+  height: 52px;
   flex-shrink: 0;
   background: transparent;
   border: none;
@@ -462,17 +462,17 @@ html.light-theme .nav-theme-toggle .icon-moon { display: none; }
 
 .mobile-toggle span {
   display: block;
-  width: 28px;
-  height: 3px;
+  width: 36px;
+  height: 4px;
   background-color: var(--boom-white);
-  border-radius: 3px;
+  border-radius: 4px;
   transition: all 0.3s var(--ease-out);
 }
 
-/* فاصله‌ی مرکز تا مرکز خطوط = ارتفاع (3px) + gap (6px) = 9px */
-.mobile-toggle.open span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+/* فاصله‌ی مرکز تا مرکز خطوط = ارتفاع (4px) + gap (8px) = 12px */
+.mobile-toggle.open span:nth-child(1) { transform: translateY(12px) rotate(45deg); }
 .mobile-toggle.open span:nth-child(2) { opacity: 0; }
-.mobile-toggle.open span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+.mobile-toggle.open span:nth-child(3) { transform: translateY(-12px) rotate(-45deg); }
 
 .mobile-overlay {
   position: fixed;
@@ -1532,9 +1532,9 @@ html.light-theme .footer-social-btn {
   /* منوی موبایل */
   .mobile-toggle {
     display: flex;
-    width: 42px;
-    height: 42px;
-    margin-block: -5px; /* ناحیه‌ی لمس بزرگ‌تر، بدون بلندتر شدن هدر */
+    width: 52px;
+    height: 52px;
+    margin-block: -10px; /* ناحیه‌ی لمس بزرگ‌تر، بدون بلندتر شدن هدر */
   }
   .boom-navigation {
     position: fixed;
