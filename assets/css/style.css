@@ -1760,6 +1760,8 @@ html.light-theme .footer-social-btn {
   position: relative;
   min-height: 280px;
   isolation: isolate;
+  display: block;
+  cursor: pointer;
 }
 
 .address-map-glow {
@@ -1785,18 +1787,19 @@ html.light-theme .footer-social-btn {
   box-shadow: inset 0 0 0 1px rgba(var(--boom-purple-rgb), 0.15);
 }
 
-.address-map-frame iframe {
+.address-map-img {
   width: 100%;
   height: 100%;
   min-height: 280px;
   border: 0;
   display: block;
-  filter: saturate(1.15) contrast(1.05);
-  transition: filter 0.6s var(--ease-out);
+  object-fit: cover;
+  object-position: center 40%;
+  transition: transform 0.6s var(--ease-out);
 }
 
-.address-map-frame.is-revealed iframe {
-  filter: saturate(1.3) contrast(1.08) brightness(1.03);
+.address-map-frame:hover .address-map-img {
+  transform: scale(1.03);
 }
 
 .address-pin-badge {
@@ -1888,7 +1891,7 @@ html.light-theme .footer-social-btn {
     order: -1;
     min-height: 180px;
   }
-  .address-map-frame iframe {
+  .address-map-img {
     min-height: 180px;
   }
   .address-info {
