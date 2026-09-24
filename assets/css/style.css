@@ -3630,3 +3630,54 @@ html.light-theme .club-story .story-list li:hover { border-color: rgba(109, 74, 
   border: 2px solid rgba(160, 140, 255, 0.4);
 }
 html.light-theme .mag-author-avatar { color: #5a3ae6; background: rgba(109, 74, 255, 0.08); border-color: rgba(109, 74, 255, 0.3); }
+
+/* ==========================================================================
+   درباره آکادمی — تایپوگرافی هم‌سبک با کادر مربی (.coach-bio)
+   اندازه‌ی یکسان، وزن معمولی، رنگ ملایم و تأکید با وزن ۶۰۰ (نه ۸۰۰)
+   ========================================================================== */
+html .club-story p,
+html .club-story .story-list-intro {
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.85;
+  color: #ccc;
+  margin-bottom: 12px;
+}
+html .club-story .story-list-intro { font-weight: 600; color: #e6e6ee; }
+html .club-story .story-lead {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.9;
+  color: #fff;
+}
+html .club-story mark.k,
+html.light-theme .club-story mark.k,
+html.light-theme .club-story mark.k-purple,
+html.light-theme .club-story mark.k-gold {
+  font-weight: 600 !important;
+  color: #fff !important;
+  font-size: inherit !important;
+}
+html .club-story .story-lead mark.k { font-weight: 600 !important; }
+html .story-title { font-size: 1.05rem; margin: 18px 0 10px; }
+html .story-title span,
+html.light-theme .story-title span { font-weight: 700; }
+html .story-list strong { font-size: 0.9rem; font-weight: 700; }
+html .story-list span { font-size: 0.84rem; line-height: 1.75; }
+
+/* تم روشن: همان رنگ‌های .coach-bio */
+html.light-theme .club-story p,
+html.light-theme .club-story .story-list-intro { color: #34314a; }
+html.light-theme .club-story .story-list-intro { color: #1a1625; }
+html.light-theme .club-story .story-lead { color: #14121f; }
+html.light-theme .club-story mark.k,
+html.light-theme .club-story mark.k-purple,
+html.light-theme .club-story mark.k-gold { color: #14121f !important; }
+
+@media (max-width: 640px) {
+  html .club-story p,
+  html .club-story .story-list-intro { font-size: 0.88rem; line-height: 1.9; }
+  html .club-story .story-lead { font-size: 0.95rem; }
+  html .story-title { font-size: 1rem; }
+  html .story-list strong { font-size: 0.88rem; }
+}
