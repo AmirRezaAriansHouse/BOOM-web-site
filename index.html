@@ -38,9 +38,17 @@
   <link rel="icon" href="assets/icons/icon-192.png" type="image/png" sizes="192x192">
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/Vazirmatn-wght.woff2" crossorigin>
+  <link rel="preload" as="image" href="assets/images/hero/hero.webp" fetchpriority="high">
+  <style>
+    @font-face {
+      font-family: 'Vazirmatn';
+      src: url('assets/fonts/Vazirmatn-wght.woff2') format('woff2-variations'), url('assets/fonts/Vazirmatn-wght.woff2') format('woff2 supports variations');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
   <link rel="stylesheet" href="assets/css/style.css">
 
   <!-- داده ساختاریافته Schema.org برای نمایش در گوگل و گوگل‌مپ -->
@@ -209,7 +217,7 @@
         <div class="hero-visual">
           <div class="hero-image-frame lightbox-trigger">
             <div class="energy-line"></div>
-            <img width="1280" height="720" src="assets/images/hero/hero.webp" alt="فضای تمرینی آکادمی انفجار" class="hero-img">
+            <img width="1280" height="720" src="assets/images/hero/hero.webp" alt="فضای تمرینی آکادمی انفجار" class="hero-img" fetchpriority="high">
           </div>
         </div>
       </div>
@@ -388,9 +396,10 @@
           >
             <div class="address-map-glow"></div>
             <img
-              src="assets/images/map/academy-location-map.png"
+              src="assets/images/map/academy-location-map.webp"
               alt="نقشه موقعیت آکادمی تخصصی انفجار BOOM در میدان آزادگان، بلوار مدرس، دورود، استان لرستان"
               title="آکادمی تخصصی انفجار BOOM - دورود، لرستان | نمایش مسیر روی نقشه"
+              width="1124" height="542"
               loading="lazy"
               class="address-map-img"
             >
