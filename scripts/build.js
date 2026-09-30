@@ -1,8 +1,7 @@
 // scripts/build.js
 // مقالات Markdown داخل content/articles/ رو می‌خونه و این‌ها رو می‌سازه:
-//   ۱. articles/<slug>.html  ← برای هر مقاله یک صفحه‌ی HTML ثابت و کامل (title، description،
-//                              canonical، Open Graph، JSON-LD و متن مقاله داخل خود HTML)
-//   ۲. magazine.html         ← بخش «جدیدترین مقاله» و لیست کارت‌ها (بین مارکرهای BUILD:...)
+//   ۱. articles/<slug>.html  ← صفحه‌ی HTML ثابت با متادیتا، Breadcrumb، محتوای مقاله و مقالات مرتبط
+//   ۲. magazine.html         ← فهرست کاملاً HTML و قابل خزیدن همه‌ی مقالات
 //   ۳. sitemap.xml           ← آدرس همه‌ی صفحات و مقالات
 //
 // اجرا: npm run build
@@ -72,6 +71,37 @@ function readTime(html) {
 
 const articleUrl = (slug) => `${SITE_URL}/articles/${encodeURIComponent(slug)}.html`;
 
+function articleImage(a) {
+  const fallback = `${SITE_URL}/assets/images/og/og-image.jpg`;
+  if (!a.image) return fallback;
+  const rel = String(a.image).replace(/^\/+/, '');
+  // اگر فایل عکس واقعاً در پروژه نباشه، به تصویر پیش‌فرض برمی‌گردیم تا لینک خراب در og:image نره
+  if (!fs.existsSync(path.join(ROOT, rel))) {
+    console.warn(`⚠️  عکس "${rel}" برای مقاله‌ی ${a.slug} پیدا نشد؛ og-image.jpg جایگزین شد.`);
+    return fallback;
+  }
+  return `${SITE_URL}/${rel}`;
+}
+
+// عکس شاخص مقاله: فقط وقتی فایلش واقعاً در پروژه هست نمایش داده می‌شه؛ وگرنه ظاهر قبلی حفظ می‌شه
+function imageRel(a) {
+  if (!a.image) return null;
+  const rel = String(a.image).replace(/^\/+/, '');
+  return fs.existsSync(path.join(ROOT, rel)) ? rel : null;
+}
+
+function imageAlt(a) {
+  return a.imageAlt || `تصویر مقاله: ${a.title}`;
+}
+
+function heroHtml(a) {
+  const rel = imageRel(a);
+  if (!rel) return '';
+  return `<figure class="mag-cover">
+            <img src="../${esc(rel)}" alt="${esc(imageAlt(a))}" width="1200" height="630" fetchpriority="high" decoding="async">
+          </figure>`;
+}
+
 // ---------------------------------------------------------------- خواندن مقالات
 function loadArticles() {
   const files = fs
@@ -95,10 +125,13 @@ function loadArticles() {
       slug,
       title: data.title,
       excerpt: data.excerpt,
+      seoTitle: data.seoTitle || data.title,
+      seoDescription: data.seoDescription || data.excerpt,
       date: data.date,
       updated: data.updated || null,
       category: data.category,
       image: data.image || null,
+      imageAlt: data.imageAlt || null,
       content: marked.parse(content.trim()),
     };
   });
@@ -106,6 +139,49 @@ function loadArticles() {
   // جدیدترین اول
   articles.sort((a, b) => jalaliToISO(b.date).localeCompare(jalaliToISO(a.date)));
   return articles;
+}
+
+function breadcrumbHtml(a) {
+  return `<nav class="mag-breadcrumb" aria-label="مسیر صفحه">
+            <ol>
+              <li><a href="../index.html">آکادمی انفجار</a></li>
+              <li><a href="../magazine.html">مجله BOOM</a></li>
+              <li aria-current="page">${esc(a.title)}</li>
+            </ol>
+          </nav>`;
+}
+
+function relatedHtml(a, allArticles) {
+  const related = allArticles
+    .filter((item) => item.slug !== a.slug)
+    .sort((x, y) => {
+      const sameCategoryX = x.category === a.category ? 1 : 0;
+      const sameCategoryY = y.category === a.category ? 1 : 0;
+      if (sameCategoryX !== sameCategoryY) return sameCategoryY - sameCategoryX;
+      return jalaliToISO(y.updated || y.date).localeCompare(jalaliToISO(x.updated || x.date));
+    })
+    .slice(0, 3);
+
+  if (!related.length) return '';
+
+  return `<section class="mag-related" aria-labelledby="relatedArticlesHeading">
+          <div class="mag-list-head">
+            <h2 id="relatedArticlesHeading">مقالات مرتبط</h2>
+            <p>مطالب مرتبط را برای تکمیل این موضوع بخوانید.</p>
+          </div>
+          <nav class="mag-grid mag-related-grid" aria-label="مقالات مرتبط">
+${related.map((r, i) => `            <a href="${esc(`../articles/${encodeURIComponent(r.slug)}.html`)}" class="mag-card mag-related-card">
+              <span class="mag-card-index">${toFaDigits(String(i + 1).padStart(2, '0'))}</span>
+              <span class="mag-card-tag">${esc(r.category)}</span>
+              <h3>${esc(r.title)}</h3>
+              <p>${esc(r.excerpt)}</p>
+              <div class="mag-card-footer">
+                <span class="mag-card-date">${esc(r.date)}</span>
+                <span class="mag-card-read">${readTime(r.content)}</span>
+              </div>
+            </a>`).join('\n')}
+          </nav>
+        </section>`;
 }
 
 // ---------------------------------------------------------------- صفحه‌ی هر مقاله
@@ -121,11 +197,11 @@ function articleJsonLd(a) {
       '@type': 'BlogPosting',
       mainEntityOfPage: { '@type': 'WebPage', '@id': url },
       headline: a.title,
-      description: a.excerpt,
+      description: a.seoDescription,
       articleSection: a.category,
       inLanguage: 'fa-IR',
       wordCount: plain.split(/\s+/).filter(Boolean).length,
-      image: `${SITE_URL}/assets/images/og/og-image.jpg`,
+      image: articleImage(a),
       datePublished: published,
       dateModified: modified,
       author: {
@@ -153,12 +229,13 @@ function articleJsonLd(a) {
   return JSON.stringify(graph, null, 2).replace(/</g, '\\u003c');
 }
 
-function renderArticlePage(template, a) {
+function renderArticlePage(template, a, allArticles) {
   const url = articleUrl(a.slug);
   const shareText = encodeURIComponent(a.title);
   const values = {
     TITLE: esc(a.title),
-    DESCRIPTION: esc(a.excerpt),
+    SEO_TITLE: esc(a.seoTitle),
+    DESCRIPTION: esc(a.seoDescription),
     CATEGORY: esc(a.category),
     DATE: esc(a.date),
     ISO_DATE: jalaliToISO(a.date),
@@ -166,12 +243,15 @@ function renderArticlePage(template, a) {
     READTIME: readTime(a.content),
     URL: url,
     SITE_URL,
+    ARTICLE_IMAGE: esc(articleImage(a)),
+    BREADCRUMB: breadcrumbHtml(a),
+    HERO: heroHtml(a),
+    RELATED: relatedHtml(a, allArticles),
     JSONLD: articleJsonLd(a),
     SHARE_WA: esc(`https://wa.me/?text=${shareText}%20${encodeURIComponent(url)}`),
     SHARE_TG: esc(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${shareText}`),
-    CONTENT: a.content, // HTML خروجی marked
+    CONTENT: a.content,
   };
-  // یک‌بار و با تابع جایگزین (تا $ داخل متن مقاله مشکل نسازه)
   return template.replace(/\{\{([A-Z_]+)\}\}/g, (m, key) => {
     if (!(key in values)) throw new Error(`placeholder ناشناخته در قالب: ${m}`);
     return values[key];
@@ -182,14 +262,13 @@ function buildArticlePages(articles) {
   const template = fs.readFileSync(TEMPLATE_FILE, 'utf8');
   fs.mkdirSync(ARTICLES_OUT, { recursive: true });
 
-  // فایل‌های HTML قدیمی مقالاتی که حذف شدن پاک می‌شن
   const keep = new Set(articles.map((a) => `${a.slug}.html`));
   for (const f of fs.readdirSync(ARTICLES_OUT)) {
     if (f.endsWith('.html') && !keep.has(f)) fs.unlinkSync(path.join(ARTICLES_OUT, f));
   }
 
   for (const a of articles) {
-    fs.writeFileSync(path.join(ARTICLES_OUT, `${a.slug}.html`), renderArticlePage(template, a), 'utf8');
+    fs.writeFileSync(path.join(ARTICLES_OUT, `${a.slug}.html`), renderArticlePage(template, a, articles), 'utf8');
   }
   console.log(`✅ ${articles.length} صفحه‌ی HTML در articles/ ساخته شد.`);
 }
@@ -199,32 +278,33 @@ const BOOK_ICON =
   '<svg viewBox="0 0 24 24" width="46" height="46" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg>';
 
 function featuredHtml(a) {
-  return `<section class="section mag-featured-section" id="magFeaturedSection">
+  return `<section class="section mag-featured-section" id="magFeaturedSection" aria-labelledby="featuredArticleHeading">
       <div class="wrap">
-        <a href="articles/${encodeURIComponent(a.slug)}.html" id="magFeatured" class="mag-featured" data-reveal>
-          <div class="mag-featured-media">
-            ${BOOK_ICON}
-          </div>
+        <article class="mag-featured" data-reveal>
+          <a href="articles/${encodeURIComponent(a.slug)}.html" class="mag-featured-media${imageRel(a) ? ' has-image' : ''}" aria-label="مطالعه ${esc(a.title)}">
+            ${imageRel(a) ? `<img src="${esc(imageRel(a))}" alt="${esc(imageAlt(a))}" width="1200" height="630" decoding="async">` : BOOK_ICON}
+          </a>
           <div class="mag-featured-body">
             <span class="mag-featured-label">جدیدترین مقاله</span>
             <span class="mag-card-tag">${esc(a.category)}</span>
-            <h2>${esc(a.title)}</h2>
+            <h2 id="featuredArticleHeading"><a href="articles/${encodeURIComponent(a.slug)}.html">${esc(a.title)}</a></h2>
             <p>${esc(a.excerpt)}</p>
             <div class="mag-featured-meta">
               <span>${esc(a.date)}</span>
               <span class="mag-dot">•</span>
               <span>${readTime(a.content)}</span>
             </div>
-            <span class="mag-read-link">مطالعه مقاله ←</span>
+            <a class="mag-read-link" href="articles/${encodeURIComponent(a.slug)}.html">مطالعه مقاله ←</a>
           </div>
-        </a>
+        </article>
       </div>
     </section>`;
 }
 
 function cardHtml(a, index) {
-  return `<a href="articles/${encodeURIComponent(a.slug)}.html" class="mag-card">
-            <span class="mag-card-index">${toFaDigits(String(index + 1).padStart(2, '0'))}</span>
+  return `<article class="mag-card-wrap">
+          <a href="articles/${encodeURIComponent(a.slug)}.html" class="mag-card">
+            ${imageRel(a) ? `<span class="mag-card-thumb"><img src="${esc(imageRel(a))}" alt="${esc(imageAlt(a))}" width="1200" height="630" loading="lazy" decoding="async"></span>\n            ` : ''}<span class="mag-card-index">${toFaDigits(String(index + 1).padStart(2, '0'))}</span>
             <span class="mag-card-tag">${esc(a.category)}</span>
             <h3>${esc(a.title)}</h3>
             <p>${esc(a.excerpt)}</p>
@@ -232,7 +312,8 @@ function cardHtml(a, index) {
               <span class="mag-card-date">${esc(a.date)}</span>
               <span class="mag-card-read">${readTime(a.content)}</span>
             </div>
-          </a>`;
+          </a>
+        </article>`;
 }
 
 function replaceBetween(html, name, inner) {
@@ -249,13 +330,13 @@ function buildMagazinePage(articles) {
   const [featured, ...rest] = articles;
 
   html = replaceBetween(html, 'FEATURED', featured ? '    ' + featuredHtml(featured) : '');
-  const listInner = articles.length
+  const listInner = rest.length
     ? rest.map((a, i) => '          ' + cardHtml(a, i)).join('\n')
-    : '          <p class="mag-empty">هنوز مقاله‌ای منتشر نشده. به‌زودی مطالب تخصصی اینجا اضافه می‌شوند.</p>';
+    : '          <p class="mag-empty">هنوز مقاله‌ی دیگری منتشر نشده. به‌زودی مطالب تخصصی اینجا اضافه می‌شوند.</p>';
   html = replaceBetween(html, 'LIST', listInner);
 
   fs.writeFileSync(MAGAZINE_FILE, html, 'utf8');
-  console.log('✅ magazine.html به‌روز شد.');
+  console.log(`✅ magazine.html با ${articles.length} لینک HTML ثابت به‌روز شد.`);
 }
 
 // ---------------------------------------------------------------- sitemap.xml

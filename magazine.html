@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>مجله BOOM | باشگاه انفجار، آکادمی تخصصی انفجار دورود</title>
-  <meta name="description" content="مقالات تخصصی درباره بدنسازی، پرورش اندام، آمادگی جسمانی و حرکات اصلاحی، از باشگاه انفجار (BOOM)، باشگاه تخصصی انفجار دورود در استان لرستان، به قلم مربی محمدحسین محررزاده.">
+  <title>مجله BOOM | مقالات بدنسازی، حرکات اصلاحی و آمادگی جسمانی</title>
+  <meta name="description" content="مقالات کاربردی درباره بدنسازی، حرکات اصلاحی، آمادگی جسمانی و شروع تمرین؛ مطالب آموزشی مجله آکادمی انفجار BOOM در دورود.">
   <script>
     // سازگاری با آدرس‌های قدیمی magazine.html?slug=... → صفحه‌ی ثابت مقاله
     (function () {
@@ -18,8 +18,8 @@
   <meta property="og:type" content="website">
   <meta property="og:locale" content="fa_IR">
   <meta property="og:site_name" content="آکادمی انفجار BOOM">
-  <meta property="og:title" content="مجله BOOM | باشگاه انفجار، آکادمی تخصصی انفجار دورود">
-  <meta property="og:description" content="مقالات تخصصی درباره بدنسازی، پرورش اندام، آمادگی جسمانی و حرکات اصلاحی، از باشگاه انفجار (BOOM)، باشگاه تخصصی انفجار دورود در استان لرستان، به قلم مربی محمدحسین محررزاده.">
+  <meta property="og:title" content="مجله BOOM | مقالات بدنسازی، حرکات اصلاحی و آمادگی جسمانی">
+  <meta property="og:description" content="مقالات کاربردی درباره بدنسازی، حرکات اصلاحی، آمادگی جسمانی و شروع تمرین؛ مطالب آموزشی مجله آکادمی انفجار BOOM در دورود.">
   <meta property="og:image" content="https://boomacademy.ir/assets/images/og/og-image.jpg">
   <meta property="og:url" content="https://boomacademy.ir/magazine.html">
   <meta name="twitter:card" content="summary_large_image">
@@ -151,25 +151,25 @@
     </section>
 
     <!-- BUILD:FEATURED:START -->
-    <section class="section mag-featured-section" id="magFeaturedSection">
+    <section class="section mag-featured-section" id="magFeaturedSection" aria-labelledby="featuredArticleHeading">
       <div class="wrap">
-        <a href="articles/why-choose-anfejar-dorud.html" id="magFeatured" class="mag-featured" data-reveal>
-          <div class="mag-featured-media">
+        <article class="mag-featured" data-reveal>
+          <a href="articles/why-choose-anfejar-dorud.html" class="mag-featured-media" aria-label="مطالعه چرا آکادمی انفجار (BOOM) در دورود رو انتخاب کنید؟">
             <svg viewBox="0 0 24 24" width="46" height="46" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg>
-          </div>
+          </a>
           <div class="mag-featured-body">
             <span class="mag-featured-label">جدیدترین مقاله</span>
             <span class="mag-card-tag">معرفی آکادمی</span>
-            <h2>چرا آکادمی انفجار (BOOM) در دورود رو انتخاب کنید؟</h2>
+            <h2 id="featuredArticleHeading"><a href="articles/why-choose-anfejar-dorud.html">چرا آکادمی انفجار (BOOM) در دورود رو انتخاب کنید؟</a></h2>
             <p>دورود چندین باشگاه بدنسازی داره؛ اما آکادمی انفجار چه تفاوتی با بقیه داره؟ نگاهی به رویکرد علمی، سابقه‌ی مربی و امکانات این مجموعه.</p>
             <div class="mag-featured-meta">
               <span>۱۴۰۵/۰۶/۲۸</span>
               <span class="mag-dot">•</span>
               <span>۳ دقیقه مطالعه</span>
             </div>
-            <span class="mag-read-link">مطالعه مقاله ←</span>
+            <a class="mag-read-link" href="articles/why-choose-anfejar-dorud.html">مطالعه مقاله ←</a>
           </div>
-        </a>
+        </article>
       </div>
     </section>
 <!-- BUILD:FEATURED:END -->
@@ -179,41 +179,48 @@
       <div class="wrap">
         <div class="mag-list-head" data-reveal>
           <h3>سایر مقالات</h3>
+          <p class="mag-list-head-sub">همه مقاله‌های مجله به‌صورت لینک HTML ثابت در همین صفحه قرار دارند.</p>
         </div>
-        <div id="articleGrid" class="mag-grid" data-reveal-stagger>
+        <nav id="articleGrid" class="mag-grid magazine-article-index" data-reveal-stagger aria-label="فهرست مقالات مجله BOOM">
           <!-- BUILD:LIST:START -->
+          <article class="mag-card-wrap">
           <a href="articles/bodybuilding-vs-corrective-exercise.html" class="mag-card">
             <span class="mag-card-index">۰۱</span>
             <span class="mag-card-tag">آمادگی جسمانی</span>
-            <h3>تفاوت بدنسازی با حرکات اصلاحی؛ کدام برای شما مناسب‌تره؟</h3>
-            <p>خیلی‌ها فکر می‌کنن بدنسازی و حرکات اصلاحی دو مسیر جدا هستن، در حالی که در بیشتر موارد مکمل هم‌دیگه‌ان. این تفاوت رو دقیق بررسی می‌کنیم.</p>
+            <h3>تفاوت بدنسازی و حرکات اصلاحی؛ کدام‌یک برای شما مناسب است؟</h3>
+            <p>بدنسازی و حرکات اصلاحی رقیب یکدیگر نیستند؛ هدف، سابقه تمرین و وضعیت حرکتی فرد مشخص می‌کند سهم هرکدام در برنامه چقدر باشد.</p>
             <div class="mag-card-footer">
               <span class="mag-card-date">۱۴۰۵/۰۶/۲۰</span>
-              <span class="mag-card-read">۲ دقیقه مطالعه</span>
+              <span class="mag-card-read">۶ دقیقه مطالعه</span>
             </div>
           </a>
+        </article>
+          <article class="mag-card-wrap">
           <a href="articles/corrective-exercise-knee-pain.html" class="mag-card">
             <span class="mag-card-index">۰۲</span>
             <span class="mag-card-tag">حرکات اصلاحی</span>
-            <h3>۵ حرکت اصلاحی برای کاهش درد زانو</h3>
-            <p>درد زانو اغلب نتیجه‌ی ضعف عضلات اطراف مفصل و الگوهای حرکتی نادرسته. در این مقاله با ۵ حرکت اصلاحی ساده و مؤثر آشنا می‌شوید.</p>
+            <h3>۵ حرکت تمرینی برای تقویت زانو و عضلات لگن؛ نکات ایمنی و اجرای صحیح</h3>
+            <p>این ۵ تمرین، نمونه‌هایی ساده برای تقویت و کنترل پایین‌تنه هستند؛ انتخاب تمرین باید با علت درد، شدت علائم و توانایی فرد هماهنگ شود.</p>
             <div class="mag-card-footer">
               <span class="mag-card-date">۱۴۰۵/۰۶/۱۲</span>
-              <span class="mag-card-read">۲ دقیقه مطالعه</span>
+              <span class="mag-card-read">۶ دقیقه مطالعه</span>
             </div>
           </a>
+        </article>
+          <article class="mag-card-wrap">
           <a href="articles/beginner-fitness-program.html" class="mag-card">
             <span class="mag-card-index">۰۳</span>
             <span class="mag-card-tag">آمادگی جسمانی</span>
-            <h3>چگونه یک برنامه تمرینی مبتدی اصولی داشته باشیم</h3>
-            <p>شروع تمرین بدون برنامه‌ریزی درست می‌تونه منجر به آسیب یا نتیجه‌نگرفتن بشه. اصول یک برنامه مبتدی درست رو اینجا بخونید.</p>
+            <h3>برنامه تمرینی مبتدی؛ اصول شروع بدنسازی و تناسب اندام</h3>
+            <p>برای شروع موفق لازم نیست از هفته اول حجم زیادی تمرین کنید؛ برنامه مبتدی باید ساده، تدریجی و هماهنگ با توصیه‌های سازمان جهانی بهداشت درباره فعالیت هوازی و تمرین قدرتی باشد.</p>
             <div class="mag-card-footer">
               <span class="mag-card-date">۱۴۰۵/۰۶/۰۴</span>
-              <span class="mag-card-read">۲ دقیقه مطالعه</span>
+              <span class="mag-card-read">۹ دقیقه مطالعه</span>
             </div>
           </a>
+        </article>
 <!-- BUILD:LIST:END -->
-        </div>
+        </nav>
       </div>
     </section>
 
