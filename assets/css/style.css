@@ -3681,3 +3681,185 @@ html.light-theme .club-story mark.k-gold { color: #14121f !important; }
   html .story-title { font-size: 1rem; }
   html .story-list strong { font-size: 0.88rem; }
 }
+
+/* --------------------------------------------------------------------------
+   IG LINE — سطر کوچک و کم‌رنگ «ما را دنبال کنید» زیر نوار ناوبری
+   (بدون پس‌زمینه و دکمه؛ با اسکرول کاملاً محو می‌شود)
+   -------------------------------------------------------------------------- */
+.ig-strip-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 6px;
+  max-height: 28px;
+  overflow: hidden;
+  transition: max-height 0.35s var(--ease-out), margin-top 0.35s var(--ease-out), opacity 0.25s var(--ease-out);
+}
+
+.boom-header.scrolled .ig-strip-wrap {
+  max-height: 0;
+  margin-top: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ig-strip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 2px 6px;
+  font-size: 0.74rem;
+  font-weight: 500;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.62);
+  transition: color 0.25s var(--ease-out);
+}
+
+.ig-strip-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  color: #fff;
+  background: linear-gradient(45deg, #f09433 0%, #dc2743 55%, #bc1888 100%);
+  opacity: 0.9;
+}
+
+.ig-strip-handle {
+  color: var(--boom-gold-light);
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+/* نشانه‌های کلیک‌پذیری: زیرخط روی متن + فلش لینک خارجی + پالس ملایم آیکون */
+.ig-strip { cursor: pointer; }
+
+.ig-strip-text {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgba(255, 255, 255, 0.4);
+  text-underline-offset: 5px;
+  transition: text-decoration-color 0.25s var(--ease-out), color 0.25s var(--ease-out);
+}
+
+.ig-strip-arrow {
+  flex-shrink: 0;
+  color: var(--boom-gold-light);
+  opacity: 0.8;
+  transition: transform 0.3s var(--ease-out), opacity 0.3s var(--ease-out);
+}
+
+.ig-strip-icon { transition: transform 0.3s var(--ease-out); }
+
+.ig-strip:hover { color: #fff; }
+.ig-strip:hover .ig-strip-text { text-decoration-color: var(--boom-gold-light); }
+.ig-strip:hover .ig-strip-handle { opacity: 1; }
+.ig-strip:hover .ig-strip-arrow { transform: translate(-2px, -2px); opacity: 1; }
+.ig-strip:hover .ig-strip-icon { transform: scale(1.12); }
+.ig-strip:focus-visible { outline: 2px solid var(--boom-gold-light); outline-offset: 2px; border-radius: 8px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .ig-strip-icon { animation: igHint 3.6s ease-out infinite; }
+  @keyframes igHint {
+    0%, 55%, 100% { box-shadow: 0 0 0 0 rgba(220, 39, 67, 0); }
+    70% { box-shadow: 0 0 0 0 rgba(220, 39, 67, 0.5); }
+    100% { box-shadow: 0 0 0 7px rgba(220, 39, 67, 0); }
+  }
+}
+
+html.light-theme .ig-strip { color: rgba(26, 22, 37, 0.62); }
+html.light-theme .ig-strip:hover { color: #1a1625; }
+html.light-theme .ig-strip-text { text-decoration-color: rgba(26, 22, 37, 0.35); }
+html.light-theme .ig-strip:hover .ig-strip-text { text-decoration-color: #6d4aff; }
+html.light-theme .ig-strip-arrow { color: #6d4aff; }
+html.light-theme .ig-strip-handle { color: #6d4aff; }
+
+@media (max-width: 768px) {
+  .ig-strip-wrap { margin-top: 4px; max-height: 24px; }
+  .ig-strip { font-size: 0.7rem; }
+  .ig-strip-handle { display: none; }
+}
+
+/* --------------------------------------------------------------------------
+   IG LINE — رنگ‌بندی: جمله با گرادیانت هم‌رنگ سایت، آیدی با گرادیانت اینستاگرام
+   -------------------------------------------------------------------------- */
+.ig-strip-text {
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 1px solid rgba(160, 140, 255, 0.45);
+  background: linear-gradient(90deg, #c9bcff 0%, #a08cff 45%, #22d3ee 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  transition: border-color 0.25s var(--ease-out), filter 0.25s var(--ease-out);
+}
+
+.ig-strip-handle {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+  opacity: 1;
+}
+
+.ig-strip-arrow { color: #e6683c; }
+
+.ig-strip:hover .ig-strip-text {
+  text-decoration: none;
+  border-bottom-color: #22d3ee;
+  filter: brightness(1.15);
+}
+.ig-strip:hover .ig-strip-handle { filter: brightness(1.12); }
+
+html.light-theme .ig-strip-text {
+  background: linear-gradient(90deg, #4b2fd6 0%, #7657ff 50%, #0891b2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  border-bottom-color: rgba(109, 74, 255, 0.4);
+  text-decoration: none;
+}
+html.light-theme .ig-strip:hover .ig-strip-text { border-bottom-color: #0891b2; text-decoration: none; }
+html.light-theme .ig-strip-handle {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+html.light-theme .ig-strip-arrow { color: #dc2743; }
+
+/* --------------------------------------------------------------------------
+   IG FOLLOW — سطر «ما را دنبال کنید» در انتهای مقالات و بالای صفحه‌ی مجله
+   (همان استایل سطر زیر نوار ناوبری، کمی بزرگ‌تر)
+   -------------------------------------------------------------------------- */
+.ig-follow {
+  display: flex;
+  justify-content: center;
+  margin: 34px 0 6px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+html.light-theme .ig-follow { border-top-color: rgba(20, 18, 31, 0.08); }
+
+.ig-follow .ig-strip {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 9px;
+  font-size: 0.9rem;
+}
+.ig-follow .ig-strip-icon { width: 24px; height: 24px; border-radius: 8px; }
+.ig-follow .ig-strip-icon svg { width: 13px; height: 13px; }
+.ig-follow .ig-strip-arrow { width: 13px; height: 13px; }
+.ig-follow .ig-strip-handle { display: inline; }
+
+/* بالای صفحه‌ی مجله: بدون خط جداکننده */
+.ig-follow--top { margin: 14px 0 0; padding-top: 0; border-top: none; }
+
+@media (max-width: 768px) {
+  .ig-follow { margin-top: 26px; padding-top: 18px; }
+  .ig-follow .ig-strip { font-size: 0.82rem; }
+  .ig-follow--top { margin-top: 10px; }
+}
