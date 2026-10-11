@@ -4,15 +4,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // ۰. مدیریت تغییر تم (روشن/تیره)
   // ==========================================
   (function setupThemeToggle() {
-    const toggleBtn = document.getElementById('themeToggle');
-    if (!toggleBtn) return;
-
-    toggleBtn.addEventListener('click', () => {
+    // دکمه‌ی هدر (دسکتاپ) و دکمه‌ی نوار پایین (موبایل)
+    const toggleBtns = document.querySelectorAll('#themeToggle, [data-theme-toggle]');
+    toggleBtns.forEach((btn) => btn.addEventListener('click', () => {
       const isLight = document.documentElement.classList.toggle('light-theme');
       try {
         localStorage.setItem('boom-theme', isLight ? 'light' : 'dark');
       } catch (e) {}
-    });
+    }));
   })();
 
   // ==========================================
@@ -64,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function openMenu() {
     mobileToggle?.classList.add('open');
+    mobileToggle?.setAttribute('aria-expanded', 'true');
     nav?.classList.add('active');
     overlay?.classList.add('active');
     document.body.style.overflow = 'hidden'; // قفل اسکرول صفحه هنگام باز بودن منو
@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function closeMenu() {
     mobileToggle?.classList.remove('open');
+    mobileToggle?.setAttribute('aria-expanded', 'false');
     nav?.classList.remove('active');
     overlay?.classList.remove('active');
     document.body.style.overflow = '';
@@ -85,6 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   overlay?.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
   navLinks.forEach(link => link.addEventListener('click', closeMenu));
 
   // ==========================================

@@ -4028,3 +4028,111 @@ html.light-theme .mag-cover { border-color: rgba(20, 18, 31, 0.1); }
 .mag-card:hover .mag-card-thumb img { transform: scale(1.04); }
 
 .mag-card-thumb ~ .mag-card-index { display: none; }
+
+/* --------------------------------------------------------------------------
+   BOTTOM NAV — نوار شناور پایین موبایل (هم‌شکل با هدر: شیشه‌ای، گوشه‌گرد، درخشش بنفش)
+   آیکون‌ها: Bootstrap Icons (SVG درون‌خطی) با گرادیان بنفش→فیروزه‌ای هم‌رنگ تیترهای سایت
+   -------------------------------------------------------------------------- */
+.bottom-nav { display: none; }
+
+@media (max-width: 768px) {
+  :root { --bnav-total: 84px; }
+
+  body { padding-bottom: calc(var(--bnav-total) + env(safe-area-inset-bottom, 0px)); }
+
+  .bottom-nav {
+    position: fixed;
+    inset-inline: 12px;
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    z-index: 1002; /* بالاتر از هدر و لایه‌ی تیره‌ی منو */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    height: 64px;
+    padding: 0 6px;
+    background: rgba(18, 18, 26, 0.86);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(var(--boom-purple-rgb), 0.3);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), 0 0 22px rgba(var(--boom-purple-rgb), 0.18);
+  }
+  .bnav-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+  .bnav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    min-width: 0;
+    height: 100%;
+    padding: 0;
+    background: none;
+    border: 0;
+    font: inherit;
+    color: var(--boom-gray);
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .bnav-ico {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 32px;
+    border-radius: 12px;
+    transition: background 0.25s var(--ease-out), transform 0.25s var(--ease-out);
+  }
+  .bnav-item:active .bnav-ico { transform: scale(0.9); background: rgba(var(--boom-purple-rgb), 0.18); }
+
+  .bnav-ico .bi { width: 22px; height: 22px; display: block; fill: url(#bnavGrad); }
+  /* نماد مجله مثل نسخه‌ی دسکتاپ (کتاب باز، خطی) با همان گرادیان بقیه */
+  .bnav-ico .bi-stroke { width: 26px; height: 26px; fill: none; stroke: url(#bnavGrad); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .bnav-ico .ico-moon, .bnav-ico .ico-sun { display: flex; }
+  .bnav-ico .ico-sun { display: none; }
+  html.light-theme .bnav-ico .ico-sun { display: flex; }
+  html.light-theme .bnav-ico .ico-moon { display: none; }
+
+  .bnav-label { font-size: 0.68rem; font-weight: 600; line-height: 1.2; color: rgba(255, 255, 255, 0.78); }
+
+  /* هر نماد گرادیان کمی متفاوتِ خودش را دارد؛ بدون پس‌زمینه و بدون درخشش */
+  .bnav-mag .bi { fill: url(#bnavGradB); }
+  .bnav-mag .bi-stroke { fill: none; stroke: url(#bnavGradB); }
+  .bnav-ig .bi { fill: url(#bnavGradC); }
+  .bnav-reserve .bi { fill: url(#bnavGradG); }
+  .bnav-reserve .bnav-label { color: rgba(255, 255, 255, 0.78); }
+
+  .bnav-item:focus-visible { outline: 2px solid var(--boom-gold); outline-offset: -3px; border-radius: 14px; }
+
+  /* در هدر موبایل فقط همبرگر می‌ماند؛ مجله/رزرو/تم در نوار پایین‌اند */
+  .nav-actions .nav-mag,
+  .nav-actions .nav-reserve,
+  .nav-actions .nav-theme-toggle { display: none !important; }
+
+  /* کشوی منو تا بالای نوار پایین می‌آید.
+     نکته: هدر backdrop-filter دارد و کشوی fixed نسبت به هدر محاسبه می‌شود، پس به‌جای bottom از ارتفاع صریح استفاده شده */
+  .boom-navigation {
+    bottom: auto;
+    height: calc(100vh - 55px - var(--bnav-total) - env(safe-area-inset-bottom, 0px));
+    height: calc(100dvh - 55px - var(--bnav-total) - env(safe-area-inset-bottom, 0px));
+  }
+}
+
+html.light-theme .bottom-nav {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(109, 74, 255, 0.25);
+  box-shadow: 0 10px 28px rgba(60, 40, 140, 0.18), 0 0 18px rgba(109, 74, 255, 0.1);
+}
+html.light-theme .bnav-label { color: rgba(26, 22, 37, 0.78); }
+/* گرادیان آیکون‌های نوار پایین در تم روشن: تیره‌تر برای کنتراست روی زمینه‌ی سفید */
+html.light-theme #bnavGrad stop:first-child { stop-color: #5a3ae6; }
+html.light-theme #bnavGrad stop:last-child { stop-color: #1b78c9; }
+html.light-theme #bnavGradB stop:first-child { stop-color: #6d4aff; }
+html.light-theme #bnavGradB stop:last-child { stop-color: #2f5be0; }
+html.light-theme #bnavGradC stop:first-child { stop-color: #d6249f; }
+html.light-theme #bnavGradC stop:last-child { stop-color: #6d4aff; }
+html.light-theme #bnavGradG stop:first-child { stop-color: #d9a21f; }
+html.light-theme #bnavGradG stop:last-child { stop-color: #a8741a; }
