@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
   // ۳. مدیریت منوی موبایل و لایه تاریک (Backdrop Overlay)
   // ==========================================
-  const mobileToggle = document.querySelector('.mobile-toggle');
+  const mobileToggles = document.querySelectorAll('.mobile-toggle, [data-menu-toggle]');
   const nav = document.querySelector('.boom-navigation');
   const navLinks = document.querySelectorAll('.boom-navigation a');
 
@@ -62,28 +62,26 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function openMenu() {
-    mobileToggle?.classList.add('open');
-    mobileToggle?.setAttribute('aria-expanded', 'true');
+    mobileToggles.forEach(t => { t.classList.add('open'); t.setAttribute('aria-expanded', 'true'); });
     nav?.classList.add('active');
     overlay?.classList.add('active');
     document.body.style.overflow = 'hidden'; // قفل اسکرول صفحه هنگام باز بودن منو
   }
 
   function closeMenu() {
-    mobileToggle?.classList.remove('open');
-    mobileToggle?.setAttribute('aria-expanded', 'false');
+    mobileToggles.forEach(t => { t.classList.remove('open'); t.setAttribute('aria-expanded', 'false'); });
     nav?.classList.remove('active');
     overlay?.classList.remove('active');
     document.body.style.overflow = '';
   }
 
-  mobileToggle?.addEventListener('click', () => {
+  mobileToggles.forEach(t => t.addEventListener('click', () => {
     if (nav?.classList.contains('active')) {
       closeMenu();
     } else {
       openMenu();
     }
-  });
+  }));
 
   overlay?.addEventListener('click', closeMenu);
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });

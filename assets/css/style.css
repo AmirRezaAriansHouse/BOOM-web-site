@@ -4092,6 +4092,8 @@ html.light-theme .mag-cover { border-color: rgba(20, 18, 31, 0.1); }
   /* نماد مجله مثل نسخه‌ی دسکتاپ (کتاب باز، خطی) با همان گرادیان بقیه */
   .bnav-ico .bi-stroke { width: 26px; height: 26px; fill: none; stroke: url(#bnavGrad); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .bnav-ico .ico-moon, .bnav-ico .ico-sun { display: flex; }
+  /* خورشید: خط‌وشعاع گرد با گرادیان زرد←نارنجی */
+  .bnav-ico .bi-sun { width: 26px; height: 26px; fill: url(#bnavGradS); stroke: url(#bnavGradS); stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 4px rgba(255, 150, 20, 0.45)); }
   .bnav-ico .ico-sun { display: none; }
   html.light-theme .bnav-ico .ico-sun { display: flex; }
   html.light-theme .bnav-ico .ico-moon { display: none; }
@@ -4101,8 +4103,10 @@ html.light-theme .mag-cover { border-color: rgba(20, 18, 31, 0.1); }
   /* هر نماد گرادیان کمی متفاوتِ خودش را دارد؛ بدون پس‌زمینه و بدون درخشش */
   .bnav-mag .bi { fill: url(#bnavGradB); }
   .bnav-mag .bi-stroke { fill: none; stroke: url(#bnavGradB); }
+  .bnav-home .bi-stroke { fill: none; stroke: url(#bnavGradH); stroke-width: 2; }
   .bnav-ig .bi { fill: url(#bnavGradC); }
   .bnav-reserve .bi { fill: url(#bnavGradG); }
+  .bnav-reserve .bi-stroke { fill: none; stroke: url(#bnavGradG); stroke-width: 2; }
   .bnav-reserve .bnav-label { color: rgba(255, 255, 255, 0.78); }
 
   .bnav-item:focus-visible { outline: 2px solid var(--boom-gold); outline-offset: -3px; border-radius: 14px; }
@@ -4130,9 +4134,216 @@ html.light-theme .bnav-label { color: rgba(26, 22, 37, 0.78); }
 /* گرادیان آیکون‌های نوار پایین در تم روشن: تیره‌تر برای کنتراست روی زمینه‌ی سفید */
 html.light-theme #bnavGrad stop:first-child { stop-color: #5a3ae6; }
 html.light-theme #bnavGrad stop:last-child { stop-color: #1b78c9; }
-html.light-theme #bnavGradB stop:first-child { stop-color: #6d4aff; }
-html.light-theme #bnavGradB stop:last-child { stop-color: #2f5be0; }
-html.light-theme #bnavGradC stop:first-child { stop-color: #d6249f; }
-html.light-theme #bnavGradC stop:last-child { stop-color: #6d4aff; }
-html.light-theme #bnavGradG stop:first-child { stop-color: #d9a21f; }
-html.light-theme #bnavGradG stop:last-child { stop-color: #a8741a; }
+/* مجله در تم روشن: کمی تیره‌تر برای کنتراست */
+html.light-theme #bnavGradB stop:nth-child(1) { stop-color: #f0324f; }
+html.light-theme #bnavGradB stop:nth-child(2) { stop-color: #a93df0; }
+html.light-theme #bnavGradB stop:nth-child(3) { stop-color: #3f5be0; }
+html.light-theme #bnavGradH stop:nth-child(1) { stop-color: #0aa5d6; }
+html.light-theme #bnavGradH stop:nth-child(2) { stop-color: #5a3ae6; }
+html.light-theme #bnavGradG stop:nth-child(1) { stop-color: #f5b800; }
+html.light-theme #bnavGradG stop:nth-child(2) { stop-color: #eaa400; }
+html.light-theme #bnavGradG stop:nth-child(3) { stop-color: #0fa88a; }
+
+
+/* --------------------------------------------------------------------------
+   موبایل: هدر کم‌ارتفاع (لوگو + تماس) و منوی کشویی بازطراحی‌شده
+   دکمه‌ی «منو» چپ‌ترین دکمه‌ی نوار پایین است و منو مثل یک پنل شیشه‌ای بالای آن باز می‌شود
+   -------------------------------------------------------------------------- */
+.nav-call { display: none; }
+
+@media (max-width: 768px) {
+  :root { --bnav-total: 84px; }
+  .bottom-nav { grid-template-columns: repeat(5, 1fr); padding: 0 4px; }
+  .bnav-label { font-size: 0.64rem; }
+
+  /* هدر: لوگو راست، دکمه‌ی تماس چپ. شیشه‌ی هدر روی ::before است تا کشوی fixed نسبت به صفحه بماند */
+  .mobile-toggle,
+  .ig-strip-wrap { display: none !important; }
+  .nav-call { display: inline-flex !important; }
+  .nav-call svg { fill: none; stroke: url(#bnavGradG); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  html .boom-header .nav-shell,
+  html .boom-header.scrolled .nav-shell,
+  html.light-theme .boom-header .nav-shell,
+  html.light-theme .boom-header.scrolled .nav-shell {
+    position: relative;
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  .nav-shell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: var(--radius-lg);
+    background: rgba(18, 18, 26, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    transition: background-color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
+  }
+  .boom-header.scrolled .nav-shell::before {
+    background: rgba(12, 12, 18, 0.9);
+    border-color: rgba(var(--boom-purple-rgb), 0.3);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(var(--boom-purple-rgb), 0.15);
+  }
+  html.light-theme .nav-shell::before { background: rgba(255, 255, 255, 0.82); border-color: rgba(109, 74, 255, 0.18); }
+  html.light-theme .boom-header.scrolled .nav-shell::before { background: rgba(255, 255, 255, 0.95); box-shadow: 0 1px 2px rgba(20, 18, 31, 0.05), 0 16px 40px rgba(109, 74, 255, 0.16); }
+
+  /* منو: پنل شیشه‌ای بالای نوار پایین، کارت‌های دو‌ستونه با آیکون رنگی */
+  .boom-navigation {
+    top: auto;
+    right: 12px;
+    left: 12px;
+    width: auto;
+    max-width: none;
+    bottom: calc(var(--bnav-total) + env(safe-area-inset-bottom, 0px));
+    height: auto;
+    max-height: calc(100vh - var(--bnav-total) - env(safe-area-inset-bottom, 0px) - 80px);
+    max-height: calc(100dvh - var(--bnav-total) - env(safe-area-inset-bottom, 0px) - 80px);
+    padding: 16px 14px 14px;
+    border: 1px solid rgba(var(--boom-purple-rgb), 0.3);
+    border-radius: 24px;
+    background: rgba(16, 16, 24, 0.94);
+    -webkit-backdrop-filter: blur(22px);
+    backdrop-filter: blur(22px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 28px rgba(var(--boom-purple-rgb), 0.22);
+    transform-origin: 12% 100%;
+    transform: translateY(26px) scale(0.94);
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.38s var(--ease-out), opacity 0.28s var(--ease-out), visibility 0s linear 0.38s;
+  }
+  .boom-navigation.active {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    visibility: visible;
+    transition: transform 0.38s var(--ease-out), opacity 0.28s var(--ease-out), visibility 0s;
+  }
+  .boom-navigation::before {
+    content: "منوی سایت";
+    display: block;
+    margin: 0 4px 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--boom-gray);
+  }
+  .boom-navigation ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .boom-navigation li { opacity: 0; transform: translateY(12px); transition: opacity 0.3s var(--ease-out), transform 0.35s var(--ease-out); }
+  .boom-navigation.active li { opacity: 1; transform: none; }
+  .boom-navigation.active li:nth-child(1) { transition-delay: 0.05s; }
+  .boom-navigation.active li:nth-child(2) { transition-delay: 0.09s; }
+  .boom-navigation.active li:nth-child(3) { transition-delay: 0.13s; }
+  .boom-navigation.active li:nth-child(4) { transition-delay: 0.17s; }
+  .boom-navigation.active li:nth-child(5) { transition-delay: 0.21s; }
+  .boom-navigation.active li:nth-child(6) { transition-delay: 0.25s; }
+
+  .boom-navigation a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 12px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--boom-white);
+    transition: background 0.25s var(--ease-out), transform 0.2s var(--ease-out);
+  }
+  .boom-navigation a::after { display: none; }
+  .boom-navigation a::before {
+    content: "";
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, #a08cff, #00f2fe);
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    -webkit-mask-position: center; mask-position: center;
+    -webkit-mask-size: contain; mask-size: contain;
+  }
+  .boom-navigation a:active { transform: scale(0.97); background: rgba(var(--boom-purple-rgb), 0.2); }
+  .boom-navigation a[href$="#club"]::before { background: linear-gradient(135deg, #ffe14d, #ff7a18); -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6.5 6.5v11M17.5 6.5v11M3 9v6M21 9v6M6.5 12h11'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6.5 6.5v11M17.5 6.5v11M3 9v6M21 9v6M6.5 12h11'/%3E%3C/svg%3E"); }
+  .boom-navigation a[href$="#gallery"]::before { background: linear-gradient(135deg, #f08ad0, #8b6cff); -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='3'/%3E%3Ccircle cx='9' cy='9' r='2'/%3E%3Cpath d='m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='3'/%3E%3Ccircle cx='9' cy='9' r='2'/%3E%3Cpath d='m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21'/%3E%3C/svg%3E"); }
+  .boom-navigation a[href$="#address"]::before { background: linear-gradient(135deg, #ff6a7a, #ff9a4d); -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3C/svg%3E"); }
+  .boom-navigation a[href$="#coach"]::before { background: linear-gradient(135deg, #4de1ff, #6d7bff); -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M4 21a8 8 0 0 1 16 0'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M4 21a8 8 0 0 1 16 0'/%3E%3C/svg%3E"); }
+  .boom-navigation a[href$="#certificates"]::before { background: linear-gradient(135deg, #ffd84d, #ff9a1f); -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='6'/%3E%3Cpath d='m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='6'/%3E%3Cpath d='m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526'/%3E%3C/svg%3E"); }
+  .boom-navigation a[href$="#process"]::before { background: linear-gradient(135deg, #34dbb4, #2fa8ff); -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='6' cy='19' r='3'/%3E%3Cpath d='M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15'/%3E%3Ccircle cx='18' cy='5' r='3'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='6' cy='19' r='3'/%3E%3Cpath d='M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15'/%3E%3Ccircle cx='18' cy='5' r='3'/%3E%3C/svg%3E"); }
+
+  /* دکمه‌ی منو: همبرگر ← ضربدر */
+  .bnav-menu .bi-stroke { stroke: url(#bnavGradM); }
+  .bnav-menu .ic-close { display: none; }
+  .bnav-menu.open .ic-menu { display: none; }
+  .bnav-menu.open .ic-close { display: inline; }
+  .bnav-menu.open .bnav-ico { background: rgba(var(--boom-purple-rgb), 0.18); }
+}
+html.light-theme #bnavGradM stop:nth-child(1) { stop-color: #5a3ae6; }
+html.light-theme #bnavGradM stop:nth-child(2) { stop-color: #1b78c9; }
+@media (max-width: 768px) {
+  html.light-theme .boom-navigation {
+    background: rgba(255, 255, 255, 0.96);
+    border-color: rgba(109, 74, 255, 0.22);
+    box-shadow: 0 20px 50px rgba(60, 40, 140, 0.22), 0 0 24px rgba(109, 74, 255, 0.12);
+  }
+  html.light-theme .boom-navigation a { background: rgba(109, 74, 255, 0.06); border-color: rgba(109, 74, 255, 0.12); color: #1a1830; }
+  html.light-theme .boom-navigation a:hover,
+  html.light-theme .boom-navigation a.active { background: rgba(109, 74, 255, 0.12); color: #1a1830; }
+  html.light-theme .boom-navigation::before { color: rgba(26, 22, 37, 0.6); }
+}
+
+/* --------------------------------------------------------------------------
+   آیکون‌های نوار ناوبری بالا (دسکتاپ): همان چهار آیکون نوار پایین موبایل
+   مجله (قرمز←بنفش) · رزرو (زرد←فیروزه‌ای) · اینستاگرام (رسمی) · تم (ماه/خورشید)
+   -------------------------------------------------------------------------- */
+.bnav-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+.nav-actions .nav-icon-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+  color: inherit;
+}
+.nav-actions .nav-icon-btn::before { display: none; }
+.nav-actions .nav-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-3px) scale(1.06);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+html.light-theme .nav-actions .nav-icon-btn { background: rgba(109, 74, 255, 0.06); border-color: rgba(109, 74, 255, 0.18); box-shadow: none; }
+html.light-theme .nav-actions .nav-icon-btn:hover { background: rgba(109, 74, 255, 0.13); box-shadow: 0 10px 24px rgba(60, 40, 140, 0.16); }
+
+.nav-actions .nav-icon-btn svg { width: 24px; height: 24px; }
+.nav-mag svg { fill: none; stroke: url(#bnavGradB); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.nav-reserve svg { fill: none; stroke: url(#bnavGradG); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.nav-ig svg { fill: url(#bnavGradC); stroke: none; width: 22px; height: 22px; }
+.nav-theme-toggle .icon-moon { fill: url(#bnavGrad); stroke: none; width: 22px; height: 22px; }
+.nav-theme-toggle .icon-sun { fill: url(#bnavGradS); stroke: url(#bnavGradS); stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+html.light-theme #bnavGradB stop:nth-child(1) { stop-color: #f0324f; }
+
+/* --------------------------------------------------------------------------
+   موبایل: هدر بالای صفحه می‌ماند (ثابت نیست)، بزرگ‌تر
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .boom-header,
+  .boom-header.scrolled { position: absolute; padding: 12px 0; }
+  .nav-shell { padding: 10px 14px; }
+  .brand-logo-img { height: 46px; }
+  .brand-name { font-size: 1.3rem; }
+  .nav-actions .nav-ig { display: none !important; }
+  .nav-actions .nav-call { width: 48px; height: 48px; border-radius: 15px; }
+  .nav-actions .nav-call svg { width: 25px; height: 25px; }
+  .hero { padding-top: 112px; }
+  .mag-hero { padding-top: 120px; }
+  .mag-detail { padding-top: 106px; }
+}
