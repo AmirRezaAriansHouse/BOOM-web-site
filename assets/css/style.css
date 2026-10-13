@@ -4347,3 +4347,106 @@ html.light-theme #bnavGradB stop:nth-child(1) { stop-color: #f0324f; }
   .mag-hero { padding-top: 120px; }
   .mag-detail { padding-top: 106px; }
 }
+
+
+/* --------------------------------------------------------------------------
+   20. BOOKING BUTTONS, BOOKING MODAL & APARAT BOX
+   -------------------------------------------------------------------------- */
+.btn-book {
+  background: linear-gradient(135deg, var(--boom-purple) 0%, #00c6ff 100%);
+  color: #fff;
+  border: 1px solid rgba(0, 242, 254, 0.45);
+  box-shadow: 0 8px 24px rgba(var(--boom-purple-rgb), 0.35);
+  font-family: inherit;
+}
+.btn-book:hover { transform: translateY(-2px); filter: brightness(1.08); box-shadow: 0 10px 28px rgba(0, 242, 254, 0.3); }
+.btn-book svg { flex-shrink: 0; }
+
+.mag-promo-row { display: flex; align-items: stretch; justify-content: center; gap: 14px; flex-wrap: wrap; }
+.mag-promo-row .mag-promo-banner { margin: 0; flex: 1 1 420px; max-width: 760px; }
+.aparat-box {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 12px 22px; border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.06); color: #fff; font-weight: 700; font-size: 0.92rem;
+  border: 1px solid rgba(237, 28, 78, 0.4);
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), background 0.25s;
+}
+.aparat-box:hover { transform: translateY(-2px); background: rgba(237, 28, 78, 0.12); box-shadow: 0 8px 20px rgba(237, 28, 78, 0.22); }
+@media (max-width: 600px) { .aparat-box { flex: 1 1 100%; } }
+
+.book-modal { position: fixed; inset: 0; z-index: 3000; display: flex; align-items: center; justify-content: center; padding: 16px; }
+.book-modal[hidden] { display: none; }
+.book-backdrop { position: absolute; inset: 0; background: rgba(4, 4, 10, 0.72); backdrop-filter: blur(4px); }
+.book-card {
+  position: relative; width: 100%; max-width: 460px; max-height: 92vh; overflow-y: auto;
+  padding: 28px 22px 22px; border-radius: var(--radius-xl);
+  background: linear-gradient(145deg, var(--boom-surface) 0%, #1c152b 100%);
+  border: 1px solid rgba(var(--boom-purple-rgb), 0.35);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55); color: #fff; text-align: right;
+}
+.book-card h3 { font-size: 1.2rem; font-weight: 900; margin-bottom: 6px; }
+.book-card h3 span { background: linear-gradient(90deg, var(--boom-purple-light), var(--boom-cyan)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.book-sub { color: var(--boom-gray); font-size: 0.85rem; margin-bottom: 18px; }
+.book-close { position: absolute; top: 10px; left: 14px; background: none; border: 0; color: #fff; font-size: 1.8rem; line-height: 1; cursor: pointer; }
+.book-field { display: block; border: 0; margin: 0 0 14px; min-width: 0; }
+.book-field legend, .book-label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 6px; padding: 0; }
+.book-label small { color: var(--boom-gray); font-weight: 500; }
+.book-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.book-card input[type="number"], .book-card textarea {
+  width: 100%; padding: 12px 14px; border-radius: var(--radius-md); font: inherit; color: #fff;
+  background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.14); outline: none;
+}
+.book-card textarea { resize: vertical; min-height: 84px; }
+.book-card input:focus, .book-card textarea:focus { border-color: var(--boom-cyan); box-shadow: 0 0 0 3px rgba(0, 242, 254, 0.15); }
+.book-radios { display: flex; gap: 10px; }
+.book-radios label { flex: 1; cursor: pointer; }
+.book-radios input { position: absolute; opacity: 0; pointer-events: none; }
+.book-radios span {
+  display: block; text-align: center; padding: 11px; border-radius: var(--radius-md); font-weight: 700;
+  background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.14); transition: all 0.2s;
+}
+.book-radios input:checked + span { background: linear-gradient(135deg, var(--boom-purple), #00c6ff); border-color: transparent; }
+.book-radios input:focus-visible + span { box-shadow: 0 0 0 3px rgba(0, 242, 254, 0.3); }
+.book-error { color: #ff6b6b; font-size: 0.85rem; margin-bottom: 10px; }
+.book-submit { width: 100%; }
+.book-hint { color: var(--boom-gray); font-size: 0.78rem; margin-top: 10px; text-align: center; min-height: 1em; }
+
+html.light-theme .book-card { background: #fff; color: #1a1830; border-color: rgba(109, 74, 255, 0.25); }
+html.light-theme .book-close { color: #1a1830; }
+html.light-theme .book-card input[type="number"], html.light-theme .book-card textarea,
+html.light-theme .book-radios span { background: #f4f1ff; color: #1a1830; border-color: rgba(109, 74, 255, 0.2); }
+html.light-theme .book-radios input:checked + span { color: #fff; }
+html.light-theme .aparat-box { background: #fff; color: #1a1830; }
+html.light-theme .book-sub, html.light-theme .book-hint { color: #5b5878; }
+
+
+/* 20b. Booking buttons: equal size, Instagram gradient, colored Aparat box */
+.cta-actions .btn-book { min-width: 210px; min-height: 54px; padding: 14px 24px; font-size: 1rem; border-radius: var(--radius-md); }
+.cta-actions .btn-gold.btn-lg { min-height: 54px; }
+@media (max-width: 600px) {
+  .cta-actions .btn-book, .cta-actions .btn-gold.btn-lg { flex: 1 1 100%; width: 100%; }
+}
+.btn-book-ig, .book-modal[data-channel="instagram"] .book-submit {
+  background: linear-gradient(45deg, #feda75 0%, #fa7e1e 25%, #d62976 50%, #962fbf 75%, #4f5bd5 100%);
+  border-color: rgba(214, 41, 118, 0.5);
+  box-shadow: 0 8px 24px rgba(214, 41, 118, 0.3);
+}
+.btn-book-ig:hover, .book-modal[data-channel="instagram"] .book-submit:hover { box-shadow: 0 10px 28px rgba(214, 41, 118, 0.45); }
+.book-modal[data-channel="instagram"] .book-radios input:checked + span { background: linear-gradient(45deg, #fa7e1e, #d62976, #962fbf); }
+.book-modal[data-channel="instagram"] .book-card h3 span { background: linear-gradient(90deg, #fa7e1e, #d62976, #962fbf); -webkit-background-clip: text; background-clip: text; }
+
+.aparat-box, html.light-theme .aparat-box {
+  background: linear-gradient(135deg, #ff3d6e 0%, #ed1c4e 55%, #b3123a 100%);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 22px rgba(237, 28, 78, 0.35);
+}
+.aparat-box:hover, html.light-theme .aparat-box:hover { background: linear-gradient(135deg, #ff5c86 0%, #f52b5c 55%, #c8164a 100%); box-shadow: 0 10px 26px rgba(237, 28, 78, 0.5); }
+
+/* 20c. Mobile jitter fix: no animated blur / box-shadow pulse in the booking box on touch devices */
+@media (max-width: 768px), (hover: none) {
+  .cta-box::before { animation: none !important; filter: none !important; display: none !important; }
+  .cta-actions .btn-gold { animation: none !important; }
+  .cta-box, .cta-box .btn, .aparat-box { will-change: auto; }
+  .cta-box .btn:hover, .cta-box .btn:active, .aparat-box:hover { transform: none !important; filter: none; }
+}

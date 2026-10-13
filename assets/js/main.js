@@ -387,3 +387,73 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!open) story.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 })();
+
+
+/* Booking via Telegram / Instagram */
+(function () {
+  const TG_USER = 'Mohamadhosin79';
+  const IG_USER = 'gym.enfejar';
+  const modal = document.getElementById('bookModal');
+  const form = document.getElementById('bookForm');
+  if (!modal || !form) return;
+  const err = document.getElementById('bookError');
+  const hint = document.getElementById('bookHint');
+  let channel = 'telegram';
+
+  const open = (ch) => {
+    channel = ch;
+    modal.dataset.channel = ch;
+    document.getElementById('bookChannel').textContent = ch === 'telegram' ? 'تلگرام' : 'اینستاگرام';
+    document.getElementById('bookSubmitText').textContent = ch === 'telegram' ? 'ارسال در تلگرام' : 'کپی و باز کردن اینستاگرام';
+    hint.textContent = ch === 'telegram' ? '' : 'متن شما کپی می‌شود؛ در دایرکت اینستاگرام فقط کافی است آن را Paste کنید.';
+    err.hidden = true;
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    const first = form.querySelector('input');
+    if (first) first.focus();
+  };
+  const close = () => { modal.hidden = true; document.body.style.overflow = ''; };
+
+  document.querySelectorAll('[data-book]').forEach((b) =>
+    b.addEventListener('click', () => open(b.dataset.book)));
+  modal.querySelectorAll('[data-book-close]').forEach((b) => b.addEventListener('click', close));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.hidden) close(); });
+
+  const toEnDigits = (v) => String(v).replace(/[۰-۹]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+    .replace(/[٠-٩]/g, (d) => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const gender = fd.get('gender');
+    const height = parseFloat(toEnDigits(fd.get('height')));
+    const weight = parseFloat(toEnDigits(fd.get('weight')));
+    const notes = String(fd.get('notes') || '').trim();
+    let msg = '';
+    if (!gender) msg = 'لطفاً جنسیت را انتخاب کنید.';
+    else if (!(height >= 100 && height <= 250)) msg = 'قد را به سانتی‌متر و به‌صورت صحیح وارد کنید.';
+    else if (!(weight >= 25 && weight <= 250)) msg = 'وزن را به کیلوگرم و به‌صورت صحیح وارد کنید.';
+    if (msg) { err.textContent = msg; err.hidden = false; return; }
+    err.hidden = true;
+
+    const text = 'سلام، می‌خواهم جلسه ارزیابی رزرو کنم.\n' +
+      'جنسیت: ' + gender + '\n' +
+      'قد: ' + height + ' سانتی‌متر\n' +
+      'وزن: ' + weight + ' کیلوگرم\n' +
+      'توضیحات: ' + (notes || '—');
+
+    if (channel === 'telegram') {
+      window.open('https://t.me/' + TG_USER + '?text=' + encodeURIComponent(text), '_blank', 'noopener');
+    } else {
+      try { await navigator.clipboard.writeText(text); } catch (_) {
+        const ta = document.createElement('textarea');
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); } catch (__) {}
+        ta.remove();
+      }
+      window.open('https://ig.me/m/' + IG_USER, '_blank', 'noopener');
+    }
+    close();
+    form.reset();
+  });
+})();
