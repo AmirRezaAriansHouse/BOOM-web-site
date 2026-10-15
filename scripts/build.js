@@ -99,10 +99,13 @@ const posStyle = (a) => (a.imagePosition ? ` style="object-position:${esc(a.imag
 function heroHtml(a) {
   const rel = imageRel(a);
   if (!rel) return '';
+  // heroImage (اختیاری): عکس جداگانه برای بالای صفحهٔ مقاله؛ image برای کارت‌ها و اشتراک‌گذاری
+  const heroRel = a.heroImage && fs.existsSync(path.join(ROOT, String(a.heroImage).replace(/^\/+/, '')))
+    ? String(a.heroImage).replace(/^\/+/, '') : rel;
   // imageFit: full  ← عکس بدون برش و با نسبت اصلی نشون داده می‌شه (برای عکس‌های عمودی)
   if (a.imageFit === 'full') {
     return `<figure class="mag-cover mag-cover-full">
-            <img src="../${esc(rel)}" alt="${esc(imageAlt(a))}" fetchpriority="high" decoding="async">
+            <img src="../${esc(heroRel)}" alt="${esc(imageAlt(a))}" fetchpriority="high" decoding="async">
           </figure>`;
   }
   return `<figure class="mag-cover">
@@ -145,6 +148,7 @@ function loadArticles() {
       authorBio: data.authorBio || null,
       authorImage: data.authorImage || null,
       imageFit: data.imageFit || null,
+      heroImage: data.heroImage || null,
       imagePosition: data.imagePosition || null,
       content: marked.parse(content.trim()),
     };
