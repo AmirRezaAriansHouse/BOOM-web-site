@@ -94,9 +94,17 @@ function imageAlt(a) {
   return a.imageAlt || `تصویر مقاله: ${a.title}`;
 }
 
+const posStyle = (a) => (a.imagePosition ? ` style="object-position:${esc(a.imagePosition)}"` : '');
+
 function heroHtml(a) {
   const rel = imageRel(a);
   if (!rel) return '';
+  // imageFit: full  ← عکس بدون برش و با نسبت اصلی نشون داده می‌شه (برای عکس‌های عمودی)
+  if (a.imageFit === 'full') {
+    return `<figure class="mag-cover mag-cover-full">
+            <img src="../${esc(rel)}" alt="${esc(imageAlt(a))}" fetchpriority="high" decoding="async">
+          </figure>`;
+  }
   return `<figure class="mag-cover">
             <img src="../${esc(rel)}" alt="${esc(imageAlt(a))}" width="1200" height="630" fetchpriority="high" decoding="async">
           </figure>`;
@@ -136,6 +144,8 @@ function loadArticles() {
       authorRole: data.authorRole || null,
       authorBio: data.authorBio || null,
       authorImage: data.authorImage || null,
+      imageFit: data.imageFit || null,
+      imagePosition: data.imagePosition || null,
       content: marked.parse(content.trim()),
     };
   });
@@ -307,7 +317,7 @@ function featuredHtml(a) {
       <div class="wrap">
         <article class="mag-featured" data-reveal>
           <a href="articles/${encodeURIComponent(a.slug)}.html" class="mag-featured-media${imageRel(a) ? ' has-image' : ''}" aria-label="مطالعه ${esc(a.title)}">
-            ${imageRel(a) ? `<img src="${esc(imageRel(a))}" alt="${esc(imageAlt(a))}" width="1200" height="630" decoding="async">` : BOOK_ICON}
+            ${imageRel(a) ? `<img src="${esc(imageRel(a))}" alt="${esc(imageAlt(a))}" width="1200" height="630" decoding="async"${posStyle(a)}>` : BOOK_ICON}
           </a>
           <div class="mag-featured-body">
             <span class="mag-featured-label">جدیدترین مقاله</span>
@@ -329,7 +339,7 @@ function featuredHtml(a) {
 function cardHtml(a, index) {
   return `<article class="mag-card-wrap">
           <a href="articles/${encodeURIComponent(a.slug)}.html" class="mag-card">
-            ${imageRel(a) ? `<span class="mag-card-thumb"><img src="${esc(imageRel(a))}" alt="${esc(imageAlt(a))}" width="1200" height="630" loading="lazy" decoding="async"></span>\n            ` : ''}<span class="mag-card-index">${toFaDigits(String(index + 1).padStart(2, '0'))}</span>
+            ${imageRel(a) ? `<span class="mag-card-thumb"><img src="${esc(imageRel(a))}" alt="${esc(imageAlt(a))}" width="1200" height="630" loading="lazy" decoding="async"${posStyle(a)}></span>\n            ` : ''}<span class="mag-card-index">${toFaDigits(String(index + 1).padStart(2, '0'))}</span>
             <span class="mag-card-tag">${esc(a.category)}</span>
             <h3>${esc(a.title)}</h3>
             <p>${esc(a.excerpt)}</p>

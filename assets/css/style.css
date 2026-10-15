@@ -4454,3 +4454,7 @@ html.light-theme .book-sub, html.light-theme .book-hint { color: #5b5878; }
 
 /* عکس داخل متن مقاله */
 .mag-article-body img { display: block; max-width: 100%; height: auto; margin: 20px auto; border-radius: 14px; }
+
+/* کاور بدون برش (برای عکس‌های عمودی) */
+.mag-cover.mag-cover-full { aspect-ratio: auto; max-width: 520px; }
+.mag-cover.mag-cover-full img { position: static; height: auto; }
