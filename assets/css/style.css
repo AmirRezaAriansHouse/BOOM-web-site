@@ -826,6 +826,7 @@ html.light-theme .fitness-chips li { color: var(--cl); }
 .coach-subtitle { color: var(--boom-gold); font-size: 0.75rem; font-weight: 900; letter-spacing: 1.5px; }
 .coach-name { font-size: 1.8rem; font-weight: 900; margin: 4px 0; }
 .coach-degree { display: block; color: var(--boom-gray); font-size: 0.85rem; margin-bottom: 16px; }
+.coach-role { display: block; margin: -8px 0 16px; font-size: 0.85rem; color: var(--boom-gray); }
 .coach-bio { font-size: 0.9rem; color: #ccc; margin-bottom: 20px; }
 
 .coach-achievement {
@@ -3466,7 +3467,7 @@ html.light-theme .hero::after { opacity: 0.45; }
   .club-features.in > .feature-card { animation: riseIn 0.7s var(--ease-out) backwards; }
 
 
-  .cta-actions .btn-gold { animation: ringPulse 2.4s ease-out infinite; }
+  .cta-actions .btn-gold { animation: none; }
   .cta-box::before {
     content: "";
     position: absolute;
@@ -4450,3 +4451,6 @@ html.light-theme .book-sub, html.light-theme .book-hint { color: #5b5878; }
   .cta-box, .cta-box .btn, .aparat-box { will-change: auto; }
   .cta-box .btn:hover, .cta-box .btn:active, .aparat-box:hover { transform: none !important; filter: none; }
 }
+
+/* عکس داخل متن مقاله */
+.mag-article-body img { display: block; max-width: 100%; height: auto; margin: 20px auto; border-radius: 14px; }

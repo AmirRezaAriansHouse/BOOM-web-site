@@ -132,6 +132,10 @@ function loadArticles() {
       category: data.category,
       image: data.image || null,
       imageAlt: data.imageAlt || null,
+      author: data.author || null,
+      authorRole: data.authorRole || null,
+      authorBio: data.authorBio || null,
+      authorImage: data.authorImage || null,
       content: marked.parse(content.trim()),
     };
   });
@@ -206,8 +210,8 @@ function articleJsonLd(a) {
       dateModified: modified,
       author: {
         '@type': 'Person',
-        name: 'محمدحسین محررزاده',
-        jobTitle: 'مربی رسمی فدراسیون بدنسازی و پرورش اندام',
+        name: a.author || 'محمدحسین محررزاده',
+        ...(a.author ? {} : { jobTitle: 'مربی رسمی فدراسیون بدنسازی و پرورش اندام' }),
       },
       publisher: {
         '@type': 'Organization',
@@ -229,6 +233,26 @@ function articleJsonLd(a) {
   return JSON.stringify(graph, null, 2).replace(/</g, '\\u003c');
 }
 
+// باکس نویسنده: پیش‌فرض مربی؛ اگه در frontmatter فیلد author باشه، همون نشون داده می‌شه
+function authorHtml(a) {
+  const name = a.author || 'محمدحسین محررزاده';
+  const role = a.authorRole || 'نویسنده';
+  const bio = a.author
+    ? a.authorBio || ''
+    : 'مربی و بنیان‌گذار آکادمی تخصصی ورزشی انفجار (BOOM)، متخصص حرکات اصلاحی و آمادگی جسمانی.';
+  const imgRel = a.author ? a.authorImage : 'assets/images/coach/coach-main.webp';
+  const img =
+    imgRel && fs.existsSync(path.join(ROOT, String(imgRel).replace(/^\/+/, '')))
+      ? `<img src="../${esc(String(imgRel).replace(/^\/+/, ''))}" alt="${esc(name)}" class="mag-author-photo" width="64" height="64" loading="lazy">\n            `
+      : '';
+  return `<div class="mag-author-box">
+            ${img}<div class="mag-author-info">
+              <span class="mag-author-role">${esc(role)}</span>
+              <h4 class="mag-author-name">${esc(name)}</h4>${bio ? `\n              <p class="mag-author-bio">${esc(bio)}</p>` : ''}
+            </div>
+          </div>`;
+}
+
 function renderArticlePage(template, a, allArticles) {
   const url = articleUrl(a.slug);
   const shareText = encodeURIComponent(a.title);
@@ -246,6 +270,7 @@ function renderArticlePage(template, a, allArticles) {
     ARTICLE_IMAGE: esc(articleImage(a)),
     BREADCRUMB: breadcrumbHtml(a),
     HERO: heroHtml(a),
+    AUTHOR_BOX: authorHtml(a),
     RELATED: relatedHtml(a, allArticles),
     JSONLD: articleJsonLd(a),
     SHARE_WA: esc(`https://wa.me/?text=${shareText}%20${encodeURIComponent(url)}`),
