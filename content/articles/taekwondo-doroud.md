@@ -10,9 +10,10 @@ imagePosition: "50% 30%"
 heroImage: "assets/images/articles/taekwondo-banovan-doroud.webp"
 imageAlt: "پوستر کلاس تکواندو بانوان در دورود، آکادمی انفجار، با مربیگری استاد نگین آریایی"
 imageFit: "full"
-author: "آکادمی انفجار"
-authorRole: "تحریریه"
-authorBio: "مجلهٔ آکادمی انفجار (BOOM) دورود."
+author: "امیررضا آرین"
+authorRole: "نویسنده"
+authorBio: "نویسندهٔ مجلهٔ آکادمی انفجار (BOOM) دورود."
+authorImage: "assets/images/authors/amirreza-arian.webp"
 ---
 
 اگر به دنبال **کلاس تکواندو بانوان در دورود** هستید، [آکادمی انفجار](../index.html#top) دوره‌های آموزش تکواندو ویژهٔ بانوان را در تمامی رده‌های سنی برگزار می‌کند. این کلاس‌ها زیر نظر استاد **نگین آریایی، مربی رسمی و داور رسمی فدراسیون تکواندو کشور** ارائه می‌شوند.
