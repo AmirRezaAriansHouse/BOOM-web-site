@@ -4490,3 +4490,15 @@ html.light-theme .book-sub, html.light-theme .book-hint { color: #5b5878; }
   position: absolute; bottom: 16px; left: 0; right: 0; text-align: center;
   color: rgba(255,255,255,.7); font-size: .85rem; pointer-events: none;
 }
+
+/* ---------- نقشهٔ داخل مقاله ---------- */
+.mag-article-body .mag-map { margin: 22px 0 26px; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--radius-lg); overflow: hidden; background: var(--boom-card); }
+html.light-theme .mag-article-body .mag-map { border-color: rgba(20, 18, 31, 0.1); }
+.mag-map-frame { position: relative; display: block; aspect-ratio: 1124 / 542; overflow: hidden; }
+.mag-article-body .mag-map-frame img { display: block; width: 100%; max-width: none; max-height: none; height: 100%; margin: 0; border-radius: 0; object-fit: cover; transition: transform 0.5s var(--ease-out); }
+.mag-map-frame:hover img { transform: scale(1.03); }
+.mag-map-badge { position: absolute; bottom: 12px; right: 12px; padding: 6px 14px; border-radius: 999px; background: rgba(8, 8, 13, 0.82); color: #fff; font-size: 0.85rem; font-weight: 700; }
+.mag-map-actions { display: flex; flex-wrap: wrap; gap: 10px; padding: 14px; }
+.mag-map-actions .btn { flex: 1 1 140px; justify-content: center; text-align: center; }
+.mag-article-body .mag-map-actions a { color: inherit; }
+@media (max-width: 768px) { .mag-map-frame { aspect-ratio: 4 / 3; } }

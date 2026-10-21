@@ -1,6 +1,6 @@
 // زوم تصاویر مقاله: کلیک/تپ برای باز شدن، چرخ ماوس یا پینچ برای زوم، کشیدن برای جابه‌جایی
 (function () {
-  var imgs = document.querySelectorAll('.mag-article-body img, .mag-cover img');
+  var imgs = document.querySelectorAll('.mag-article-body img:not(.no-zoom), .mag-cover img');
   if (!imgs.length) return;
   var ov = document.createElement('div');
   ov.className = 'zoom-overlay';
