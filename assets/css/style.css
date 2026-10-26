@@ -4502,3 +4502,8 @@ html.light-theme .mag-article-body .mag-map { border-color: rgba(20, 18, 31, 0.1
 .mag-map-actions .btn { flex: 1 1 140px; justify-content: center; text-align: center; }
 .mag-article-body .mag-map-actions a { color: inherit; }
 @media (max-width: 768px) { .mag-map-frame { aspect-ratio: 4 / 3; } }
+
+/* عکس بزرگ داخل متن مقاله (figure با کلاس mag-photo) */
+.mag-article-body .mag-photo { margin: 24px 0; }
+.mag-article-body .mag-photo img { display: block; width: 100%; max-width: 100%; max-height: none; height: auto; margin: 0 auto; border-radius: 14px; object-fit: cover; }
+.mag-article-body .mag-photo figcaption { margin-top: 8px; font-size: 0.85rem; text-align: center; opacity: 0.75; }
